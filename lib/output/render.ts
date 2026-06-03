@@ -454,18 +454,26 @@ function renderArticleHtml(a: ArticleInput, showSource = false): string {
   const meta = a.meta ? escapeHtml(a.meta) : "";
   const time = formatDate(a.publishedAt);
   const sourceLabel = a.source ? escapeHtml(a.source) : "";
-  const metaLine = [sourceLabel, time].filter(Boolean).join(" · ");
+  const sourceChip = showSource && sourceLabel ? `<span class="meta-chip">${sourceLabel}</span>` : "";
+  const timeChip = time ? `<span class="meta-chip muted">${time}</span>` : "";
+  const metaLine = [sourceChip, timeChip].filter(Boolean).join("");
   // News-style summary label for finance/politics, project-intro style for GH/tech.
   const newsy = a.category === "finance" || a.category === "politics";
   const summaryLabel = newsy ? STR.summaryLabelNews : STR.summaryLabelIntro;
   const body = summary || excerpt;
   return `<article class="article">
-  <h3 class="article-title"><a href="${url}" target="_blank" rel="noopener noreferrer">${title}</a></h3>
-  ${meta ? `<p class="article-stats">${meta}</p>` : ""}
-  ${metaLine ? `<p class="article-meta">${metaLine}</p>` : ""}
+  <div class="article-head">
+    <h3 class="article-title"><a href="${url}" target="_blank" rel="noopener noreferrer">${title}</a></h3>
+    <a class="article-cta" href="${url}" target="_blank" rel="noopener noreferrer">${STR.readOriginal} ↗</a>
+  </div>
+  <div class="article-meta">
+    ${meta ? `<span class="article-stats">${meta}</span>` : ""}
+    ${metaLine ? `<span class="meta-inline">${metaLine}</span>` : ""}
+  </div>
   ${excerpt ? `<p class="article-excerpt">${excerpt}</p>` : ""}
-  ${body ? `<p class="article-summary"><span class="summary-label">${summaryLabel}</span> ${body}</p>` : ""}
-  <p class="article-link"><a href="${url}" target="_blank" rel="noopener noreferrer">${STR.readOriginal} →</a></p>
+  ${body ? `<div class="article-summary-wrap">
+    <p class="article-summary"><span class="summary-label">${summaryLabel}</span> ${body}</p>
+  </div>` : ""}
 </article>`;
 }
 
@@ -683,34 +691,39 @@ export function renderHtml(
   /* ===== primary tabs ===== */
   .tabs {
     display: flex;
-    gap: 0.25rem;
-    margin: 1.25rem 0 0.75rem;
-    border-bottom: 1px solid var(--rule);
+    gap: 0.45rem;
+    margin: 1.35rem 0 1rem;
     flex-wrap: wrap;
   }
   .tab {
-    background: none;
-    border: none;
-    padding: 0.7rem 1.1rem;
-    font-size: 0.95rem;
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
     font-weight: 500;
-    color: var(--muted);
+    color: var(--fg-soft);
     cursor: pointer;
-    border-bottom: 2px solid transparent;
-    margin-bottom: -1px;
     font-family: inherit;
-    transition: color 0.15s;
+    transition: all 0.16s;
+    line-height: 1.1;
   }
-  .tab:hover { color: var(--fg); }
-  .tab.active {
+  .tab:hover {
+    border-color: var(--muted);
     color: var(--fg);
-    border-bottom-color: var(--accent);
+  }
+  .tab.active {
+    background: var(--accent);
+    color: var(--accent-fg);
+    border-color: transparent;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
   }
   .tab .count {
-    font-size: 0.72rem;
-    color: var(--muted);
-    margin-left: 0.4rem;
+    font-size: 0.7rem;
+    color: inherit;
+    margin-left: 0.45rem;
     font-weight: 400;
+    opacity: 0.85;
   }
   .panel { display: none; }
   .panel.active { display: block; }
@@ -824,30 +837,40 @@ export function renderHtml(
   .sub-tabs {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.4rem;
-    margin: 1rem 0;
+    gap: 0.45rem;
+    margin: 0.95rem 0;
   }
   .sub-tab {
-    background: var(--card);
-    border: 1px solid transparent;
-    padding: 0.5rem 1.05rem;
-    border-radius: 0.5rem;
-    font-size: 0.9rem;
+    background: transparent;
+    border: 1px solid var(--rule);
+    padding: 0.45rem 0.9rem;
+    border-radius: 999px;
+    font-size: 0.84rem;
     font-weight: 500;
     color: var(--fg-soft);
     cursor: pointer;
     font-family: inherit;
     transition: all 0.15s;
   }
-  .sub-tab:hover { border-color: var(--muted); color: var(--fg); }
+  .sub-tab:hover {
+    color: var(--fg);
+    border-color: var(--muted);
+  }
   .sub-tab.active {
-    background: var(--accent);
-    color: var(--accent-fg);
+    background: #f5f3ff;
+    border-color: transparent;
+    color: #4338ca;
+  }
+  @media (prefers-color-scheme: dark) {
+    .sub-tab.active {
+      background: rgba(99, 102, 241, 0.22);
+      color: #c7d2fe;
+    }
   }
   .sub-tab .count {
-    font-size: 0.7rem;
-    opacity: 0.75;
-    margin-left: 0.4rem;
+    font-size: 0.68rem;
+    opacity: 0.8;
+    margin-left: 0.34rem;
     font-weight: 400;
   }
   .sub-content { display: none; }
@@ -858,16 +881,16 @@ export function renderHtml(
     display: flex;
     flex-wrap: wrap;
     gap: 0.35rem;
-    margin: 0.9rem 0 1.3rem;
-    padding-bottom: 0.7rem;
+    margin: 0.95rem 0 1.2rem;
+    padding-bottom: 0.72rem;
     border-bottom: 1px solid var(--rule);
   }
   .source-tab {
-    background: none;
+    background: transparent;
     border: 1px solid var(--rule);
-    padding: 0.35rem 0.85rem;
+    padding: 0.32rem 0.75rem;
     border-radius: 999px;
-    font-size: 0.83rem;
+    font-size: 0.78rem;
     color: var(--fg-soft);
     cursor: pointer;
     font-family: inherit;
@@ -875,41 +898,101 @@ export function renderHtml(
   }
   .source-tab:hover { border-color: var(--muted); color: var(--fg); }
   .source-tab.active {
-    background: var(--fg);
-    color: var(--bg);
-    border-color: var(--fg);
+    background: var(--bg-elevated);
+    border-color: var(--accent);
+    color: var(--fg);
+    font-weight: 600;
   }
   .source-tab .count {
-    font-size: 0.7rem;
+    font-size: 0.68rem;
     opacity: 0.75;
-    margin-left: 0.3rem;
+    margin-left: 0.28rem;
   }
   .source-content { display: none; }
   .source-content.active { display: block; }
 
   /* ===== article cards in raw panels ===== */
   .article {
-    background: var(--bg-elevated);
+    background: linear-gradient(180deg, var(--bg-elevated), var(--card));
     border: 1px solid var(--rule);
-    border-radius: 0.55rem;
-    padding: 0.9rem 1rem;
-    margin-bottom: 0.7rem;
+    border-radius: 0.85rem;
+    padding: 0.95rem 1.05rem;
+    margin-bottom: 0.72rem;
+    box-shadow: 0 3px 14px rgba(0, 0, 0, 0.04);
   }
   .article:last-child { margin-bottom: 0; }
+  .article-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 0.32rem;
+  }
   .article-title {
-    font-size: 1.05rem;
-    margin: 0 0 0.35rem;
-    font-weight: 600;
+    font-size: 1.02rem;
+    margin: 0;
+    font-weight: 650;
     line-height: 1.45;
+    letter-spacing: -0.01em;
   }
   .article-title a { color: var(--fg); text-decoration: none; }
-  .article-title a:hover { color: var(--link); text-decoration: underline; }
-  .article-meta { color: var(--muted); font-size: 0.76rem; margin: 0 0 0.35rem; }
+  .article-title a:hover { color: var(--link); }
+  .article-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.22rem;
+    font-size: 0.74rem;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    padding: 0.24rem 0.64rem;
+    color: var(--muted);
+    text-decoration: none;
+    white-space: nowrap;
+    font-weight: 500;
+    background: var(--bg);
+  }
+  .article-cta:hover {
+    color: var(--fg);
+    border-color: var(--muted);
+  }
+  .article-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.55rem;
+    margin: 0 0 0.4rem;
+  }
   .article-stats {
     color: var(--muted);
-    font-size: 0.8rem;
-    margin: 0 0 0.4rem;
+    font-size: 0.75rem;
+    margin: 0;
     font-feature-settings: "tnum";
+  }
+  .meta-inline {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    flex-wrap: wrap;
+  }
+  .meta-chip {
+    font-size: 0.72rem;
+    color: #4338ca;
+    padding: 0.1rem 0.48rem;
+    border-radius: 999px;
+    border: 1px solid rgba(67, 56, 202, 0.3);
+    background: #eef2ff;
+  }
+  .meta-chip.muted {
+    color: var(--muted);
+    border-color: var(--rule);
+    background: transparent;
+  }
+  @media (prefers-color-scheme: dark) {
+    .meta-chip {
+      color: #c7d2fe;
+      border-color: rgba(199, 210, 254, 0.28);
+      background: rgba(99, 102, 241, 0.18);
+    }
   }
   .article-excerpt {
     margin: 0;
@@ -918,35 +1001,19 @@ export function renderHtml(
     line-height: 1.72;
     word-break: break-word;
   }
+  .article-summary-wrap {
+    margin-top: 0.58rem;
+  }
   .article-summary {
-    margin: 0.55rem 0 0.65rem;
+    margin: 0;
     padding: 0.6rem 0.85rem;
     background: var(--card);
     border-left: 2px solid var(--link);
     border-radius: 0.3rem;
-    font-size: 0.9rem;
+    font-size: 0.86rem;
     line-height: 1.6;
     color: var(--fg);
-  }
-  .article-link {
-    margin: 0;
-  }
-  .article-link a {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.28rem;
-    font-size: 0.82rem;
-    color: var(--link);
-    text-decoration: none;
-    border: 1px solid var(--link);
-    border-radius: 999px;
-    padding: 0.2rem 0.62rem;
-    width: fit-content;
-  }
-  .article-link a:hover {
-    background: var(--link);
-    color: var(--bg);
-    text-decoration: none;
+    word-break: break-word;
   }
   .summary-label {
     display: inline-block;
