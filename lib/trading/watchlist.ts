@@ -47,30 +47,33 @@ export const ASSET_GROUP_ORDER: AssetGroup[] = [
 ];
 
 export const WATCHLIST: TickerDef[] = [
-  // === 美股蓝筹 + 大盘 ETF ===
-  { symbol: "SPY", displayName: "S&P 500 ETF", group: "us-equity" },
-  { symbol: "QQQ", displayName: "Nasdaq 100 ETF", group: "us-equity" },
-  { symbol: "AAPL", displayName: "Apple", group: "us-equity" },
-  { symbol: "MSFT", displayName: "Microsoft", group: "us-equity" },
-  { symbol: "NVDA", displayName: "Nvidia", group: "us-equity" },
-  { symbol: "GOOGL", displayName: "Alphabet", group: "us-equity" },
-  { symbol: "TSLA", displayName: "Tesla", group: "us-equity" },
-  { symbol: "META", displayName: "Meta", group: "us-equity" },
-  // === 加密货币 ===
-  { symbol: "BTC-USD", displayName: "Bitcoin", group: "crypto" },
-  { symbol: "ETH-USD", displayName: "Ethereum", group: "crypto" },
-  { symbol: "SOL-USD", displayName: "Solana", group: "crypto" },
-  // === 中概 / 港股 ===
-  { symbol: "BABA", displayName: "阿里巴巴 (BABA)", displayNameEn: "Alibaba (BABA)", group: "china-equity" },
-  { symbol: "PDD", displayName: "拼多多 (PDD)", displayNameEn: "Pinduoduo (PDD)", group: "china-equity" },
-  { symbol: "JD", displayName: "京东 (JD)", displayNameEn: "JD.com (JD)", group: "china-equity" },
-  { symbol: "0700.HK", displayName: "腾讯控股 (0700.HK)", displayNameEn: "Tencent (0700.HK)", group: "china-equity" },
-  // === 商品 + 外汇 ===
-  { symbol: "GC=F", displayName: "黄金期货", displayNameEn: "Gold Futures", group: "commodity-fx" },
-  { symbol: "CL=F", displayName: "WTI 原油期货", displayNameEn: "WTI Crude Futures", group: "commodity-fx" },
-  { symbol: "USDCNY=X", displayName: "美元 / 人民币", displayNameEn: "USD / CNY", group: "commodity-fx" },
   // === 宏观信号（恐慌指数 / 利率 / 美元）===
   { symbol: "^VIX", displayName: "VIX 恐慌指数", displayNameEn: "VIX (Volatility)", group: "macro" },
   { symbol: "^TNX", displayName: "10Y 美债收益率 (%)", displayNameEn: "10Y Treasury Yield (%)", group: "macro" },
   { symbol: "DX-Y.NYB", displayName: "美元指数 DXY", displayNameEn: "DXY (US Dollar Index)", group: "macro" },
+  // === 大盘参照 ===
+  { symbol: "SPY", displayName: "S&P 500 ETF", group: "us-equity" },
+  { symbol: "QQQ", displayName: "Nasdaq 100 ETF", group: "us-equity" },
+  // === 当前持仓（按截图仓位排序）===
+  { symbol: "NVDA", displayName: "Nvidia (17.62%)", displayNameEn: "Nvidia (17.62%)", group: "us-equity" },
+  { symbol: "ORCL", displayName: "Oracle (10.87%)", displayNameEn: "Oracle (10.87%)", group: "us-equity" },
+  { symbol: "MU", displayName: "Micron Technology (8.24%)", displayNameEn: "Micron Technology (8.24%)", group: "us-equity" },
+  { symbol: "MRVL", displayName: "Marvell Technology (7.91%)", displayNameEn: "Marvell Technology (7.91%)", group: "us-equity" },
+  { symbol: "PL", displayName: "Planet Labs (6.22%)", displayNameEn: "Planet Labs (6.22%)", group: "us-equity" },
+  { symbol: "ASTS", displayName: "AST SpaceMobile (5.84%)", displayNameEn: "AST SpaceMobile (5.84%)", group: "us-equity" },
+  { symbol: "RKLB", displayName: "Rocket Lab (5.25%)", displayNameEn: "Rocket Lab (5.25%)", group: "us-equity" },
+  { symbol: "AMD", displayName: "AMD (5.14%)", displayNameEn: "AMD (5.14%)", group: "us-equity" },
+  { symbol: "RDW", displayName: "Redwire (5.06%)", displayNameEn: "Redwire (5.06%)", group: "us-equity" },
+  { symbol: "ASTC", displayName: "Astrotech (4.70%)", displayNameEn: "Astrotech (4.70%)", group: "us-equity" },
+  { symbol: "GOOG", displayName: "Alphabet Class C (3.35%)", displayNameEn: "Alphabet Class C (3.35%)", group: "us-equity" },
+  { symbol: "AVGO", displayName: "Broadcom (2.86%)", displayNameEn: "Broadcom (2.86%)", group: "us-equity" },
+  { symbol: "AAPL", displayName: "Apple (2.70%)", displayNameEn: "Apple (2.70%)", group: "us-equity" },
+  { symbol: "CSCO", displayName: "Cisco Systems (2.45%)", displayNameEn: "Cisco Systems (2.45%)", group: "us-equity" },
+  { symbol: "TSLA", displayName: "Tesla (2.13%)", displayNameEn: "Tesla (2.13%)", group: "us-equity" },
+  { symbol: "AMZN", displayName: "Amazon (2.08%)", displayNameEn: "Amazon (2.08%)", group: "us-equity" },
+  { symbol: "MSFT", displayName: "Microsoft (1.88%)", displayNameEn: "Microsoft (1.88%)", group: "us-equity" },
+  { symbol: "IBM", displayName: "IBM (1.72%)", displayNameEn: "IBM (1.72%)", group: "us-equity" },
+  { symbol: "QCOM", displayName: "Qualcomm (1.66%)", displayNameEn: "Qualcomm (1.66%)", group: "us-equity" },
+  { symbol: "CDNS", displayName: "Cadence Design Systems (1.52%)", displayNameEn: "Cadence Design Systems (1.52%)", group: "us-equity" },
+  { symbol: "META", displayName: "Meta Platforms (0.79%)", displayNameEn: "Meta Platforms (0.79%)", group: "us-equity" },
 ];
