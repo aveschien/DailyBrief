@@ -70,6 +70,7 @@ const TEXTS_ZH = {
   mdTodayKeywords: "今日关键词",
   mdImportance: "重要度",
   archiveLink: "← 历史归档",
+  readOriginal: "查看原文",
 };
 
 const TEXTS_EN: typeof TEXTS_ZH = {
@@ -120,6 +121,7 @@ const TEXTS_EN: typeof TEXTS_ZH = {
   mdTodayKeywords: "Keywords",
   mdImportance: "Importance",
   archiveLink: "← Archive",
+  readOriginal: "Open article",
 };
 
 const STR = REPORT_LOCALE === "en" ? TEXTS_EN : TEXTS_ZH;
@@ -451,17 +453,19 @@ function renderArticleHtml(a: ArticleInput, showSource = false): string {
   const summary = summaryText ? escapeHtml(summaryText) : "";
   const meta = a.meta ? escapeHtml(a.meta) : "";
   const time = formatDate(a.publishedAt);
-  const sourceLabel = showSource && a.source ? escapeHtml(a.source) : "";
+  const sourceLabel = a.source ? escapeHtml(a.source) : "";
   const metaLine = [sourceLabel, time].filter(Boolean).join(" · ");
   // News-style summary label for finance/politics, project-intro style for GH/tech.
   const newsy = a.category === "finance" || a.category === "politics";
   const summaryLabel = newsy ? STR.summaryLabelNews : STR.summaryLabelIntro;
+  const body = summary || excerpt;
   return `<article class="article">
   <h3 class="article-title"><a href="${url}" target="_blank" rel="noopener noreferrer">${title}</a></h3>
   ${meta ? `<p class="article-stats">${meta}</p>` : ""}
   ${metaLine ? `<p class="article-meta">${metaLine}</p>` : ""}
   ${excerpt ? `<p class="article-excerpt">${excerpt}</p>` : ""}
-  ${summary ? `<p class="article-summary"><span class="summary-label">${summaryLabel}</span> ${summary}</p>` : ""}
+  ${body ? `<p class="article-summary"><span class="summary-label">${summaryLabel}</span> ${body}</p>` : ""}
+  <p class="article-link"><a href="${url}" target="_blank" rel="noopener noreferrer">${STR.readOriginal} →</a></p>
 </article>`;
 }
 
@@ -885,15 +889,17 @@ export function renderHtml(
 
   /* ===== article cards in raw panels ===== */
   .article {
-    padding: 1rem 0;
-    border-bottom: 1px solid var(--rule);
+    background: var(--bg-elevated);
+    border: 1px solid var(--rule);
+    border-radius: 0.55rem;
+    padding: 0.9rem 1rem;
+    margin-bottom: 0.7rem;
   }
-  .article:first-child { padding-top: 0; }
-  .article:last-child { border-bottom: none; }
+  .article:last-child { margin-bottom: 0; }
   .article-title {
-    font-size: 1rem;
-    margin: 0 0 0.3rem;
-    font-weight: 500;
+    font-size: 1.05rem;
+    margin: 0 0 0.35rem;
+    font-weight: 600;
     line-height: 1.45;
   }
   .article-title a { color: var(--fg); text-decoration: none; }
@@ -908,11 +914,12 @@ export function renderHtml(
   .article-excerpt {
     margin: 0;
     color: var(--fg-soft);
-    font-size: 0.9rem;
-    line-height: 1.6;
+    font-size: 0.89rem;
+    line-height: 1.72;
+    word-break: break-word;
   }
   .article-summary {
-    margin: 0.55rem 0 0;
+    margin: 0.55rem 0 0.65rem;
     padding: 0.6rem 0.85rem;
     background: var(--card);
     border-left: 2px solid var(--link);
@@ -920,6 +927,26 @@ export function renderHtml(
     font-size: 0.9rem;
     line-height: 1.6;
     color: var(--fg);
+  }
+  .article-link {
+    margin: 0;
+  }
+  .article-link a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.28rem;
+    font-size: 0.82rem;
+    color: var(--link);
+    text-decoration: none;
+    border: 1px solid var(--link);
+    border-radius: 999px;
+    padding: 0.2rem 0.62rem;
+    width: fit-content;
+  }
+  .article-link a:hover {
+    background: var(--link);
+    color: var(--bg);
+    text-decoration: none;
   }
   .summary-label {
     display: inline-block;
