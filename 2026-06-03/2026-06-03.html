@@ -346,47 +346,49 @@
 
   /* ===== article cards in raw panels ===== */
   .article {
-    background: linear-gradient(180deg, var(--bg-elevated), var(--card));
+    background: var(--bg-elevated);
     border: 1px solid var(--rule);
-    border-radius: 0.85rem;
-    padding: 0.95rem 1.05rem;
-    margin-bottom: 0.72rem;
-    box-shadow: 0 3px 14px rgba(0, 0, 0, 0.04);
+    border-radius: 0.7rem;
+    padding: 0.9rem 0.95rem;
+    margin-bottom: 0.6rem;
   }
   .article:last-child { margin-bottom: 0; }
   .article-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 0.75rem;
     margin-bottom: 0.32rem;
   }
   .article-title {
-    font-size: 1.02rem;
+    font-size: 0.98rem;
     margin: 0;
     font-weight: 650;
-    line-height: 1.45;
+    line-height: 1.35;
     letter-spacing: -0.01em;
   }
   .article-title a { color: var(--fg); text-decoration: none; }
-  .article-title a:hover { color: var(--link); }
+  .article-title a:hover { color: var(--link); text-decoration: underline; }
   .article-cta {
     display: inline-flex;
     align-items: center;
     gap: 0.22rem;
     font-size: 0.74rem;
-    border: 1px solid var(--rule);
-    border-radius: 999px;
-    padding: 0.24rem 0.64rem;
-    color: var(--muted);
+    border: 1px solid var(--muted);
+    border-radius: 0.45rem;
+    padding: 0.26rem 0.72rem;
+    color: var(--fg);
     text-decoration: none;
     white-space: nowrap;
     font-weight: 500;
-    background: var(--bg);
+    background: var(--card);
+    transition: transform 0.12s, border-color 0.12s;
   }
   .article-cta:hover {
-    color: var(--fg);
-    border-color: var(--muted);
+    color: var(--link);
+    border-color: var(--fg-soft);
+    transform: translateY(-1px);
+  }
+  .article-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 0.58rem;
   }
   .article-meta {
     display: flex;
@@ -397,7 +399,7 @@
   }
   .article-stats {
     color: var(--muted);
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     margin: 0;
     font-feature-settings: "tnum";
   }
@@ -408,11 +410,11 @@
     flex-wrap: wrap;
   }
   .meta-chip {
-    font-size: 0.72rem;
-    color: #4338ca;
-    padding: 0.1rem 0.48rem;
+    font-size: 0.68rem;
+    color: var(--fg-soft);
+    padding: 0.06rem 0.45rem;
     border-radius: 999px;
-    border: 1px solid rgba(67, 56, 202, 0.3);
+    border: 1px solid var(--rule);
     background: #eef2ff;
   }
   .meta-chip.muted {
@@ -429,33 +431,51 @@
   }
   .article-excerpt {
     margin: 0;
-    color: var(--fg-soft);
-    font-size: 0.89rem;
+    color: var(--fg);
+    font-size: 0.87rem;
     line-height: 1.72;
     word-break: break-word;
   }
+  .article-details {
+    margin-top: 0.52rem;
+  }
+  .article-details summary {
+    cursor: pointer;
+    list-style: none;
+    color: var(--link);
+    font-size: 0.72rem;
+    font-weight: 600;
+    user-select: none;
+  }
+  .article-details summary::marker {
+    display: none;
+  }
+  .article-details summary::after {
+    content: " ▾";
+    color: var(--muted);
+  }
+  .article-details[open] summary::after {
+    content: " ▴";
+  }
+  .article-details summary:hover {
+    color: var(--fg);
+  }
   .article-summary-wrap {
-    margin-top: 0.58rem;
+    margin-top: 0.38rem;
   }
   .article-summary {
     margin: 0;
-    padding: 0.6rem 0.85rem;
+    padding: 0.62rem 0.8rem;
     background: var(--card);
     border-left: 2px solid var(--link);
-    border-radius: 0.3rem;
-    font-size: 0.86rem;
+    border-radius: 0.35rem;
+    font-size: 0.84rem;
     line-height: 1.6;
     color: var(--fg);
     word-break: break-word;
   }
   .summary-label {
-    display: inline-block;
-    font-size: 0.68rem;
-    color: var(--link);
-    margin-right: 0.4rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
+    display: none;
   }
 
   .empty {
@@ -742,155 +762,210 @@
     <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://github.com/chopratejas/headroom" target="_blank" rel="noopener noreferrer">chopratejas/headroom</a></h3>
-    <a class="article-cta" href="https://github.com/chopratejas/headroom" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     <span class="article-stats">Python · ★ 8,489 · 🍴 565 · 📈 3,528 stars today</span>
     
   </div>
   <p class="article-excerpt">Compress tool outputs, logs, files, and RAG chunks before they reach the LLM. 60-95% fewer tokens, same answers. Library, proxy, MCP server.</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 在大语言模型接收前压缩工具输出、日志、文件和检索增强生成片段，显著减少令牌消耗而尽量保持答案质量，适合代理链路、检索管线和上下文转发服务。</p>
+  <details class="article-details">
+    <summary>中文介绍</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">在大语言模型接收前压缩工具输出、日志、文件和检索增强生成片段，显著减少令牌消耗而尽量保持答案质量，适合代理链路、检索管线和上下文转发服务。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://github.com/chopratejas/headroom" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://github.com/microsoft/markitdown" target="_blank" rel="noopener noreferrer">microsoft/markitdown</a></h3>
-    <a class="article-cta" href="https://github.com/microsoft/markitdown" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     <span class="article-stats">Python · ★ 142,324 · 🍴 9,707 · 📈 2,006 stars today</span>
     
   </div>
   <p class="article-excerpt">Python tool for converting files and office documents to Markdown.</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 用 Python 把文件和办公文档转换为 Markdown，方便统一清洗、索引和喂给大语言模型，常用于知识库构建、内容抽取和批量文档处理。</p>
+  <details class="article-details">
+    <summary>中文介绍</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">用 Python 把文件和办公文档转换为 Markdown，方便统一清洗、索引和喂给大语言模型，常用于知识库构建、内容抽取和批量文档处理。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://github.com/microsoft/markitdown" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://github.com/affaan-m/ECC" target="_blank" rel="noopener noreferrer">affaan-m/ECC</a></h3>
-    <a class="article-cta" href="https://github.com/affaan-m/ECC" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     <span class="article-stats">JavaScript · ★ 205,026 · 🍴 31,464 · 📈 2,147 stars today</span>
     
   </div>
   <p class="article-excerpt">The agent harness performance optimization system. Skills, instincts, memory, security, and research-first development for Claude Code, Codex, Opencode, Cursor and beyond.</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 面向代码代理的性能优化系统，围绕技能、直觉、记忆、安全和研究优先流程做调优，帮助在 Claude Code、Codex、Cursor 等环境里提升代理执行质量。</p>
+  <details class="article-details">
+    <summary>中文介绍</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">面向代码代理的性能优化系统，围绕技能、直觉、记忆、安全和研究优先流程做调优，帮助在 Claude Code、Codex、Cursor 等环境里提升代理执行质量。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://github.com/affaan-m/ECC" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://github.com/D4Vinci/Scrapling" target="_blank" rel="noopener noreferrer">D4Vinci/Scrapling</a></h3>
-    <a class="article-cta" href="https://github.com/D4Vinci/Scrapling" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     <span class="article-stats">Python · ★ 59,786 · 🍴 5,769 · 📈 1,078 stars today</span>
     
   </div>
   <p class="article-excerpt">🕷️ An adaptive Web Scraping framework that handles everything from a single request to a full-scale crawl!</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 提供自适应网页采集框架，既能处理单次请求，也能支撑大规模爬取，适合需要稳定抓取动态站点、批量采集数据和持续监控页面变化的开发者。</p>
+  <details class="article-details">
+    <summary>中文介绍</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">提供自适应网页采集框架，既能处理单次请求，也能支撑大规模爬取，适合需要稳定抓取动态站点、批量采集数据和持续监控页面变化的开发者。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://github.com/D4Vinci/Scrapling" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://github.com/nesquena/hermes-webui" target="_blank" rel="noopener noreferrer">nesquena/hermes-webui</a></h3>
-    <a class="article-cta" href="https://github.com/nesquena/hermes-webui" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     <span class="article-stats">Python · ★ 12,916 · 🍴 1,578 · 📈 734 stars today</span>
     
   </div>
   <p class="article-excerpt">Hermes WebUI: The best way to use Hermes Agent from the web or from your phone!</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 为 Hermes 代理提供网页和手机端界面，方便随时发起对话、查看结果和管理任务，适合移动办公、远程控制和轻量级代理操作场景。</p>
+  <details class="article-details">
+    <summary>中文介绍</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">为 Hermes 代理提供网页和手机端界面，方便随时发起对话、查看结果和管理任务，适合移动办公、远程控制和轻量级代理操作场景。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://github.com/nesquena/hermes-webui" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://github.com/reconurge/flowsint" target="_blank" rel="noopener noreferrer">reconurge/flowsint</a></h3>
-    <a class="article-cta" href="https://github.com/reconurge/flowsint" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     <span class="article-stats">TypeScript · ★ 4,792 · 🍴 604 · 📈 509 stars today</span>
     
   </div>
   <p class="article-excerpt">A modern platform for visual, flexible, and extensible graph-based investigations. For cybersecurity analysts and investigators.</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 把网络安全调查做成可视化、灵活、可扩展的图谱分析平台，帮助分析师梳理实体关系、关联事件线索并加速溯源排查，适合安全运营和取证调查。</p>
+  <details class="article-details">
+    <summary>中文介绍</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">把网络安全调查做成可视化、灵活、可扩展的图谱分析平台，帮助分析师梳理实体关系、关联事件线索并加速溯源排查，适合安全运营和取证调查。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://github.com/reconurge/flowsint" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://github.com/OpenBMB/VoxCPM" target="_blank" rel="noopener noreferrer">OpenBMB/VoxCPM</a></h3>
-    <a class="article-cta" href="https://github.com/OpenBMB/VoxCPM" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     <span class="article-stats">Python · ★ 25,474 · 🍴 2,906 · 📈 713 stars today</span>
     
   </div>
   <p class="article-excerpt">VoxCPM2: Tokenizer-Free TTS for Multilingual Speech Generation, Creative Voice Design, and True-to-Life Cloning</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 面向多语言语音生成的文本转语音模型，主打无分词器架构、创意音色设计和高仿真声音克隆，适合语音应用、配音合成和研究型开发。</p>
+  <details class="article-details">
+    <summary>中文介绍</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">面向多语言语音生成的文本转语音模型，主打无分词器架构、创意音色设计和高仿真声音克隆，适合语音应用、配音合成和研究型开发。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://github.com/OpenBMB/VoxCPM" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://github.com/stefan-jansen/machine-learning-for-trading" target="_blank" rel="noopener noreferrer">stefan-jansen/machine-learning-for-trading</a></h3>
-    <a class="article-cta" href="https://github.com/stefan-jansen/machine-learning-for-trading" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     <span class="article-stats">Jupyter Notebook · ★ 18,881 · 🍴 5,259 · 📈 716 stars today</span>
     
   </div>
   <p class="article-excerpt">Code for Machine Learning for Algorithmic Trading, 2nd edition.</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 配套《机器学习与算法交易》第二版的代码仓库，汇集金融特征工程、策略建模和回测示例，适合学习量化交易和实盘前的研究验证。</p>
+  <details class="article-details">
+    <summary>中文介绍</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">配套《机器学习与算法交易》第二版的代码仓库，汇集金融特征工程、策略建模和回测示例，适合学习量化交易和实盘前的研究验证。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://github.com/stefan-jansen/machine-learning-for-trading" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://github.com/jamwithai/production-agentic-rag-course" target="_blank" rel="noopener noreferrer">jamwithai/production-agentic-rag-course</a></h3>
-    <a class="article-cta" href="https://github.com/jamwithai/production-agentic-rag-course" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     <span class="article-stats">Python · ★ 6,607 · 🍴 1,504 · 📈 372 stars today</span>
     
   </div>
   
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 围绕生产级代理式检索增强生成的课程代码与练习，帮助学习如何把检索、工具调用和代理流程落地到可部署系统，适合做企业知识问答和智能助手。</p>
+  <details class="article-details">
+    <summary>中文介绍</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">围绕生产级代理式检索增强生成的课程代码与练习，帮助学习如何把检索、工具调用和代理流程落地到可部署系统，适合做企业知识问答和智能助手。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://github.com/jamwithai/production-agentic-rag-course" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://github.com/supermemoryai/supermemory" target="_blank" rel="noopener noreferrer">supermemoryai/supermemory</a></h3>
-    <a class="article-cta" href="https://github.com/supermemoryai/supermemory" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     <span class="article-stats">TypeScript · ★ 24,964 · 🍴 2,197 · 📈 601 stars today</span>
     
   </div>
   <p class="article-excerpt">Memory engine and app that is extremely fast, scalable. The Memory API for the AI era.</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 提供高速、可扩展的记忆引擎和应用，把长期记忆能力抽象成接口供人工智能系统调用，适合构建个人知识库、上下文保存和跨会话记忆服务。</p>
+  <details class="article-details">
+    <summary>中文介绍</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">提供高速、可扩展的记忆引擎和应用，把长期记忆能力抽象成接口供人工智能系统调用，适合构建个人知识库、上下文保存和跨会话记忆服务。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://github.com/supermemoryai/supermemory" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://github.com/Open-LLM-VTuber/Open-LLM-VTuber" target="_blank" rel="noopener noreferrer">Open-LLM-VTuber/Open-LLM-VTuber</a></h3>
-    <a class="article-cta" href="https://github.com/Open-LLM-VTuber/Open-LLM-VTuber" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     <span class="article-stats">Python · ★ 8,750 · 🍴 1,096 · 📈 702 stars today</span>
     
   </div>
   <p class="article-excerpt">Talk to any LLM with hands-free voice interaction, voice interruption, and Live2D taking face running locally across platforms</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 让用户通过语音与大语言模型免手操作对话，支持打断、跨平台本地运行和二次元形象联动，适合虚拟主播、桌面助手和沉浸式语音交互。</p>
+  <details class="article-details">
+    <summary>中文介绍</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">让用户通过语音与大语言模型免手操作对话，支持打断、跨平台本地运行和二次元形象联动，适合虚拟主播、桌面助手和沉浸式语音交互。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://github.com/Open-LLM-VTuber/Open-LLM-VTuber" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
   </div>
@@ -903,281 +978,381 @@
     <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://huggingface.co/papers/2605.29707" target="_blank" rel="noopener noreferrer">Domino: Decoupling Causal Modeling from Autoregressive Drafting in Speculative Decoding</a></h3>
-    <a class="article-cta" href="https://huggingface.co/papers/2605.29707" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     <span class="article-stats">👍 130</span>
     <span class="meta-inline"><span class="meta-chip muted">05/27 17:00</span></span>
   </div>
   <p class="article-excerpt">Speculative decoding accelerates LLM inference by drafting multiple tokens and verifying them in parallel with the target model. However, its practical speedup is constrained by the trade-off between draft quality and drafting cost: autoregressive drafters model causal dependencies among draft token</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 将草稿生成中的因果建模与验证过程解耦，采用更轻量的草稿策略降低自回归开销，在保持草稿质量的同时提升投机解码的推理加速比。</p>
+  <details class="article-details">
+    <summary>中文介绍</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">将草稿生成中的因果建模与验证过程解耦，采用更轻量的草稿策略降低自回归开销，在保持草稿质量的同时提升投机解码的推理加速比。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://huggingface.co/papers/2605.29707" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://huggingface.co/papers/2606.02373" target="_blank" rel="noopener noreferrer">Harness-1: Reinforcement Learning for Search Agents with State-Externalizing Harnesses</a></h3>
-    <a class="article-cta" href="https://huggingface.co/papers/2606.02373" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     <span class="article-stats">👍 34</span>
     <span class="meta-inline"><span class="meta-chip muted">05/31 17:00</span></span>
   </div>
   <p class="article-excerpt">Search agents are often trained as policies over growing transcripts: the model must decide how to search while also remembering what it has seen, which evidence is useful, which constraints remain open, and which claims have actually been checked. We argue that this formulation puts too much routin</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 针对搜索代理把全部历史塞入上下文导致状态混乱，提出外置状态的训练框架，将已见证据、未决约束和已核查断言分开管理，并用强化学习提升搜索决策。</p>
+  <details class="article-details">
+    <summary>中文介绍</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">针对搜索代理把全部历史塞入上下文导致状态混乱，提出外置状态的训练框架，将已见证据、未决约束和已核查断言分开管理，并用强化学习提升搜索决策。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://huggingface.co/papers/2606.02373" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://huggingface.co/papers/2606.01249" target="_blank" rel="noopener noreferrer">Trust Region On-Policy Distillation</a></h3>
-    <a class="article-cta" href="https://huggingface.co/papers/2606.01249" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     <span class="article-stats">👍 30</span>
     <span class="meta-inline"><span class="meta-chip muted">05/30 17:00</span></span>
   </div>
   <p class="article-excerpt">On-Policy Distillation (OPD) is a fundamental technique for efficient post-training of large language models (LLMs), with broad applications in agent learning, multi-task enhancement, and model compression. However, OPD training becomes unstable when the teacher and student distributions differ subs</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 针对教师与学生分布偏移下的在线蒸馏不稳定，提出信赖域约束的在策略蒸馏，在控制更新幅度的同时保持方向一致，降低训练崩塌并提升后训练稳定性。</p>
+  <details class="article-details">
+    <summary>中文介绍</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">针对教师与学生分布偏移下的在线蒸馏不稳定，提出信赖域约束的在策略蒸馏，在控制更新幅度的同时保持方向一致，降低训练崩塌并提升后训练稳定性。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://huggingface.co/papers/2606.01249" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://huggingface.co/papers/2605.30501" target="_blank" rel="noopener noreferrer">Linear Ensembles Wash Away Watermarks: On the Fragility of Distributional Perturbations in LLMs</a></h3>
-    <a class="article-cta" href="https://huggingface.co/papers/2605.30501" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     <span class="article-stats">👍 25</span>
     <span class="meta-inline"><span class="meta-chip muted">05/27 17:00</span></span>
   </div>
   <p class="article-excerpt">Watermarking embeds statistical signatures in AI-generated text for detection and attribution. We reveal a fundamental vulnerability: when users access multiple models (today&#39;s reality), watermarks trivially fail. Watermarks perturb output distributions away from the original, and in competitive mar</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 研究多模型线性集成对文本水印的影响，发现分布扰动型水印在竞争式集成下极易失效；简单平均多个模型输出即可削弱统计签名，暴露现有水印的脆弱性。</p>
+  <details class="article-details">
+    <summary>中文介绍</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">研究多模型线性集成对文本水印的影响，发现分布扰动型水印在竞争式集成下极易失效；简单平均多个模型输出即可削弱统计签名，暴露现有水印的脆弱性。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://huggingface.co/papers/2605.30501" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://huggingface.co/papers/2606.00683" target="_blank" rel="noopener noreferrer">OCC-RAG: Optimal Cognitive Core for Faithful Question Answering</a></h3>
-    <a class="article-cta" href="https://huggingface.co/papers/2606.00683" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     <span class="article-stats">👍 23</span>
     <span class="meta-inline"><span class="meta-chip muted">05/29 17:00</span></span>
   </div>
   <p class="article-excerpt">Recent progress in the development of language models has been defined by scale, with each generation absorbing more of the world&#39;s knowledge into its weights. However, many practical applications benefit more from robust reasoning than from extensive parametric knowledge. In this setting, task-spec</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 面向忠实问答提出最优认知核心检索增强框架，强调以任务特定推理替代单纯扩充参数记忆，把检索到的证据压缩为核心认知成分，以提高回答可信度。</p>
+  <details class="article-details">
+    <summary>中文介绍</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">面向忠实问答提出最优认知核心检索增强框架，强调以任务特定推理替代单纯扩充参数记忆，把检索到的证据压缩为核心认知成分，以提高回答可信度。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://huggingface.co/papers/2606.00683" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://huggingface.co/papers/2606.02398" target="_blank" rel="noopener noreferrer">A Local Perturbation Theory for Cross-Domain Interference and Recovery in Multi-Domain RL</a></h3>
-    <a class="article-cta" href="https://huggingface.co/papers/2606.02398" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     <span class="article-stats">👍 19</span>
     <span class="meta-inline"><span class="meta-chip muted">05/31 17:00</span></span>
   </div>
   <p class="article-excerpt">Reinforcement learning (RL) post-training improves large language models (LLMs) on individual domains such as mathematical reasoning, code generation, question answering, and creative writing (CW), but training on one domain often degrades performance on others. Existing explanations based on catast</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 以局部扰动理论解释多领域强化学习中的跨域干扰，分析数学、代码、问答与创作任务间性能退化与恢复规律，为减少灾难性迁移和提升协同训练提供理论依据。</p>
+  <details class="article-details">
+    <summary>中文介绍</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">以局部扰动理论解释多领域强化学习中的跨域干扰，分析数学、代码、问答与创作任务间性能退化与恢复规律，为减少灾难性迁移和提升协同训练提供理论依据。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://huggingface.co/papers/2606.02398" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://huggingface.co/papers/2606.03603" target="_blank" rel="noopener noreferrer">World Models Meet Language Models: On the Complementarity of Concrete and Abstract Reasoning</a></h3>
-    <a class="article-cta" href="https://huggingface.co/papers/2606.03603" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     <span class="article-stats">👍 16</span>
     <span class="meta-inline"><span class="meta-chip muted">06/02 06:07</span></span>
   </div>
   <p class="article-excerpt">World models and multimodal large language models (MLLMs) provide complementary capabilities for predicting future outcomes from static visual observations. World models can generate concrete visual rollouts of possible futures, while MLLMs can reason abstractly over questions, goals, and rules. How</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 讨论世界模型与多模态大模型在未来预测上的互补性：前者生成具体视觉演化，后者负责抽象推理；结合后可同时处理可见轨迹、目标约束与规则级决策。</p>
+  <details class="article-details">
+    <summary>中文介绍</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">讨论世界模型与多模态大模型在未来预测上的互补性：前者生成具体视觉演化，后者负责抽象推理；结合后可同时处理可见轨迹、目标约束与规则级决策。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://huggingface.co/papers/2606.03603" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://huggingface.co/papers/2605.23895" target="_blank" rel="noopener noreferrer">From Activation to Causality: Discovery of Causal Visual Representations in the Human Brain</a></h3>
-    <a class="article-cta" href="https://huggingface.co/papers/2605.23895" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     <span class="article-stats">👍 15</span>
     <span class="meta-inline"><span class="meta-chip muted">05/21 17:00</span></span>
   </div>
   <p class="article-excerpt">Identifying which brain regions represent a visual concept in the human brain is a central challenge in neuroscience. Existing approaches have localized coarse functional regions (e.g., faces, places) through activation maximization, identifying regions that activate strongly for a target concept re</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 从仅看激活转向因果分析，利用干预方法识别人脑中真正承载视觉概念表征的区域，超越粗粒度功能分区，为发现可解释的视觉因果表征提供新路径。</p>
+  <details class="article-details">
+    <summary>中文介绍</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">从仅看激活转向因果分析，利用干预方法识别人脑中真正承载视觉概念表征的区域，超越粗粒度功能分区，为发现可解释的视觉因果表征提供新路径。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://huggingface.co/papers/2605.23895" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://huggingface.co/papers/2606.01961" target="_blank" rel="noopener noreferrer">AutoMedBench: Towards Medical AutoResearch with Agentic AI Models</a></h3>
-    <a class="article-cta" href="https://huggingface.co/papers/2606.01961" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     <span class="article-stats">👍 15</span>
     <span class="meta-inline"><span class="meta-chip muted">05/31 17:00</span></span>
   </div>
   <p class="article-excerpt">Autonomous agents are increasingly expected to support end-to-end medical-AI research workflows, moving beyond isolated prediction tasks or short-form clinical question answering. However, existing medical agent benchmarks primarily evaluate final outputs, providing limited visibility into agent beh</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 构建医学自动科研基准，评估代理模型完成端到端医学人工智能工作流的能力，不只看最终答案，还细分检索、实验规划、分析与写作等过程行为。</p>
+  <details class="article-details">
+    <summary>中文介绍</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">构建医学自动科研基准，评估代理模型完成端到端医学人工智能工作流的能力，不只看最终答案，还细分检索、实验规划、分析与写作等过程行为。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://huggingface.co/papers/2606.01961" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://huggingface.co/papers/2606.01599" target="_blank" rel="noopener noreferrer">TRON: Targeted Rule-Verifiable Online Environments for Visual Reasoning RL</a></h3>
-    <a class="article-cta" href="https://huggingface.co/papers/2606.01599" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     <span class="article-stats">👍 12</span>
     <span class="meta-inline"><span class="meta-chip muted">05/31 19:52</span></span>
   </div>
   <p class="article-excerpt">Reinforcement learning (RL) for visual reasoning needs scalable, verifiable, and controllable training signals. Existing visual RL post-training trains on static curated datasets, with fixed image-question-answer samples bounded by their collection budget. In this work, we introduce TRON (Targeted, </p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 提出可定向、可验证、可控的在线环境，为视觉推理强化学习提供可规模化训练信号，突破静态标注集限制，支持按规则生成交互与奖励。</p>
+  <details class="article-details">
+    <summary>中文介绍</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">提出可定向、可验证、可控的在线环境，为视觉推理强化学习提供可规模化训练信号，突破静态标注集限制，支持按规则生成交互与奖励。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://huggingface.co/papers/2606.01599" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://huggingface.co/papers/2606.02754" target="_blank" rel="noopener noreferrer">Ψ-Bench: Evaluating Persona-Sensitive Influencing in Persuasive Dialogues</a></h3>
-    <a class="article-cta" href="https://huggingface.co/papers/2606.02754" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     <span class="article-stats">👍 9</span>
     <span class="meta-inline"><span class="meta-chip muted">06/01 11:20</span></span>
   </div>
   <p class="article-excerpt">Personalization is a crucial capability of modern language agents. However, current research primarily positions personalized agents as passive responders to user preferences, limiting their ability to interact with users and provide suggestions or guidance proactively. To systematically evaluate su</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 提出人格敏感劝服对话基准，评测语言代理能否基于用户画像主动提出建议与影响判断，而非只被动响应偏好，从而补足个性化交互能力的系统评估。</p>
+  <details class="article-details">
+    <summary>中文介绍</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">提出人格敏感劝服对话基准，评测语言代理能否基于用户画像主动提出建议与影响判断，而非只被动响应偏好，从而补足个性化交互能力的系统评估。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://huggingface.co/papers/2606.02754" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://huggingface.co/papers/2606.03979" target="_blank" rel="noopener noreferrer">Language Models Need Sleep: Learning to Self-Modify and Consolidate Memories</a></h3>
-    <a class="article-cta" href="https://huggingface.co/papers/2606.03979" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     <span class="article-stats">👍 9</span>
     <span class="meta-inline"><span class="meta-chip muted">06/01 17:00</span></span>
   </div>
   <p class="article-excerpt">The past few decades have witnessed significant advances in the design of machine learning algorithms, from early studies on task-specific shallow models to more general deep Large Language Models (LLMs). Despite showing promising results in tasks that require instant prediction or in-context learni</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 借鉴睡眠机制，让语言模型在训练后进行自修改与记忆巩固，通过整理、压缩和重写记忆提升长期适应性，缓解瞬时推理对上下文的过度依赖。</p>
+  <details class="article-details">
+    <summary>中文介绍</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">借鉴睡眠机制，让语言模型在训练后进行自修改与记忆巩固，通过整理、压缩和重写记忆提升长期适应性，缓解瞬时推理对上下文的过度依赖。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://huggingface.co/papers/2606.03979" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://huggingface.co/papers/2606.02388" target="_blank" rel="noopener noreferrer">Policy and World Modeling Co-Training for Language Agents</a></h3>
-    <a class="article-cta" href="https://huggingface.co/papers/2606.02388" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     <span class="article-stats">👍 8</span>
     <span class="meta-inline"><span class="meta-chip muted">05/31 17:00</span></span>
   </div>
   <p class="article-excerpt">Reinforcement learning (RL) improves large language model (LLM) agents by teaching them which actions lead to high rewards, but provides little supervision on what those actions do to the environment. World modeling (WM) can fill this gap, yet existing approaches often require separate simulators, e</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 将策略学习与世界建模联合训练，使语言代理既学会高回报动作，也理解动作对环境的影响，弥补单纯强化学习缺少环境监督、单独建模难以优化策略的问题。</p>
+  <details class="article-details">
+    <summary>中文介绍</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">将策略学习与世界建模联合训练，使语言代理既学会高回报动作，也理解动作对环境的影响，弥补单纯强化学习缺少环境监督、单独建模难以优化策略的问题。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://huggingface.co/papers/2606.02388" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://huggingface.co/papers/2605.30931" target="_blank" rel="noopener noreferrer">MineExplorer: Evaluating Open-World Exploration of MLLM Agents in Minecraft</a></h3>
-    <a class="article-cta" href="https://huggingface.co/papers/2605.30931" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     <span class="article-stats">👍 8</span>
     <span class="meta-inline"><span class="meta-chip muted">05/28 17:00</span></span>
   </div>
   <p class="article-excerpt">Multimodal large language models (MLLMs) have shown strong capabilities in perception, reasoning, and action generation. However, their ability to sustain exploration in dynamic open worlds remains unclear. Existing embodied and game-based benchmarks often compress interaction into short-horizon tas</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 在《我的世界》开放世界中评测多模态大模型代理的持续探索能力，重点考察长时程导航、资源采集与任务推进，暴露现有基准短视且压缩交互的问题。</p>
+  <details class="article-details">
+    <summary>中文介绍</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">在《我的世界》开放世界中评测多模态大模型代理的持续探索能力，重点考察长时程导航、资源采集与任务推进，暴露现有基准短视且压缩交互的问题。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://huggingface.co/papers/2605.30931" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://huggingface.co/papers/2606.01717" target="_blank" rel="noopener noreferrer">Decentralized Instruction Tuning: Conflict-Aware Splitting and Weight Merging</a></h3>
-    <a class="article-cta" href="https://huggingface.co/papers/2606.01717" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     <span class="article-stats">👍 7</span>
     <span class="meta-inline"><span class="meta-chip muted">05/31 17:00</span></span>
   </div>
   <p class="article-excerpt">Instruction tuning aligns large language models, including multimodal ones, with diverse user intents, but scaling to heterogeneous mixtures is hindered by gradient interference and bandwidth-heavy synchronization. We ask whether these two bottlenecks can be addressed jointly by training parts of th</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 针对指令微调中的梯度干扰与通信瓶颈，提出冲突感知分裂训练和权重合并方案，让不同数据子集分别优化后再融合，兼顾效率、泛化与多模态适配。</p>
+  <details class="article-details">
+    <summary>中文介绍</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">针对指令微调中的梯度干扰与通信瓶颈，提出冲突感知分裂训练和权重合并方案，让不同数据子集分别优化后再融合，兼顾效率、泛化与多模态适配。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://huggingface.co/papers/2606.01717" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://huggingface.co/papers/2606.03102" target="_blank" rel="noopener noreferrer">Small RL Controller, Large Language Model: RL-Guided Adaptive Sampling for Test-Time Scaling</a></h3>
-    <a class="article-cta" href="https://huggingface.co/papers/2606.03102" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     <span class="article-stats">👍 6</span>
     <span class="meta-inline"><span class="meta-chip muted">06/01 20:42</span></span>
   </div>
   <p class="article-excerpt">Test-time scaling improves the reasoning performance of large language models but incurs substantial cost in both total computation and latency. Existing adaptive sampling methods partially mitigate this issue by dynamically deciding when to stop sampling, yet they typically rely on heuristic rules </p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 提出小型强化学习控制器引导大模型自适应采样，在测试时动态决定继续生成还是停止，以减少推理成本和延迟，同时尽量保留测试时扩展带来的性能收益。</p>
+  <details class="article-details">
+    <summary>中文介绍</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">提出小型强化学习控制器引导大模型自适应采样，在测试时动态决定继续生成还是停止，以减少推理成本和延迟，同时尽量保留测试时扩展带来的性能收益。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://huggingface.co/papers/2606.03102" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://huggingface.co/papers/2605.29288" target="_blank" rel="noopener noreferrer">Diagnosing Harmful Continuation in Answer-Correct Long-CoT Training Traces</a></h3>
-    <a class="article-cta" href="https://huggingface.co/papers/2605.29288" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     <span class="article-stats">👍 6</span>
     <span class="meta-inline"><span class="meta-chip muted">05/27 17:00</span></span>
   </div>
   <p class="article-excerpt">Long chain-of-thought (CoT) traces are widely used as supervision for reasoning-oriented LLM SFT, yet answer-correct traces can still lead to markedly different fine-tuning outcomes. We study post-conclusion continuation in answer-correct long-CoT data: a continuation where the answer appears suffic</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 研究答案正确但答案后仍继续生成的长链推理轨迹，发现这种『正确后续』会带来有害监督信号并影响微调结果，为长思维链数据清洗和质量诊断提供依据。</p>
+  <details class="article-details">
+    <summary>中文介绍</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">研究答案正确但答案后仍继续生成的长链推理轨迹，发现这种『正确后续』会带来有害监督信号并影响微调结果，为长思维链数据清洗和质量诊断提供依据。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://huggingface.co/papers/2605.29288" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://huggingface.co/papers/2606.01414" target="_blank" rel="noopener noreferrer">Agent Skills Should Go Beyond Text: The Case for Visual Skills</a></h3>
-    <a class="article-cta" href="https://huggingface.co/papers/2606.01414" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     <span class="article-stats">👍 6</span>
     <span class="meta-inline"><span class="meta-chip muted">05/30 17:00</span></span>
   </div>
   <p class="article-excerpt">Reusable skills are a key mechanism for extending agent capabilities, allowing agents to accumulate experience and solve increasingly complex tasks. Yet most existing skill-learning methods store reusable experience as text-only assets, such as instructions, reasoning traces, or summarized trajector</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 指出代理技能不应只存文本经验，提出把视觉能力纳入可复用技能库，使代理能以图像或界面线索迁移经验，更适合复杂环境中的持续学习与泛化。</p>
+  <details class="article-details">
+    <summary>中文介绍</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">指出代理技能不应只存文本经验，提出把视觉能力纳入可复用技能库，使代理能以图像或界面线索迁移经验，更适合复杂环境中的持续学习与泛化。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://huggingface.co/papers/2606.01414" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://huggingface.co/papers/2606.03264" target="_blank" rel="noopener noreferrer">PaddleOCR-VL-1.6: Expanding the Frontier of Document Parsing with Under-Optimized Region Refinement and Progressive Post-Training</a></h3>
-    <a class="article-cta" href="https://huggingface.co/papers/2606.03264" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     <span class="article-stats">👍 5</span>
     <span class="meta-inline"><span class="meta-chip muted">06/01 17:00</span></span>
   </div>
   <p class="article-excerpt">We introduce PaddleOCR-VL-1.6, an upgraded compact document parsing model built upon PaddleOCR-VL-1.5. Although PaddleOCR-VL-1.5 establishes a strong 0.9B baseline, its remaining errors concentrate in under-optimized regions where model behavior is unstable, data coverage is sparse, or supervision i</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 在紧凑型文档解析模型基础上升级，通过欠优化区域细化与渐进式后训练修补稳定性差、数据稀疏和监督不足的错误，进一步提升文档解析精度与鲁棒性。</p>
+  <details class="article-details">
+    <summary>中文介绍</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">在紧凑型文档解析模型基础上升级，通过欠优化区域细化与渐进式后训练修补稳定性差、数据稀疏和监督不足的错误，进一步提升文档解析精度与鲁棒性。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://huggingface.co/papers/2606.03264" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://huggingface.co/papers/2605.27346" target="_blank" rel="noopener noreferrer">MERIT: Learning Disentangled Music Representations for Audio Similarity</a></h3>
-    <a class="article-cta" href="https://huggingface.co/papers/2605.27346" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     <span class="article-stats">👍 5</span>
     <span class="meta-inline"><span class="meta-chip muted">05/25 17:00</span></span>
   </div>
   <p class="article-excerpt">Current music similarity models typically compute a single, monolithic score, entangling distinct musical dimensions like melody, rhythm, and timbre. This limits user control and interpretability, making it impossible to execute nuanced queries. We introduce MERIT, a framework for learning disentang</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 面向音乐相似度学习，提出解耦表示框架，将旋律、节奏和音色分开建模，避免单一相似分数混杂多种因素，从而支持更细粒度、可解释的检索与查询。</p>
+  <details class="article-details">
+    <summary>中文介绍</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">面向音乐相似度学习，提出解耦表示框架，将旋律、节奏和音色分开建模，避免单一相似分数混杂多种因素，从而支持更细粒度、可解释的检索与查询。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://huggingface.co/papers/2605.27346" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
   </div>
@@ -1190,141 +1365,191 @@
     <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://x.com/elpresidank/status/2061768508577321257" target="_blank" rel="noopener noreferrer">Context as Topology: Why Your Agent&#39;s Memory Forgets, and How Structure Escapes It</a></h3>
-    <a class="article-cta" href="https://x.com/elpresidank/status/2061768508577321257" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     <span class="article-stats">@elpresidank · 116 粉丝 · 2.9M 阅 · 543 赞 · 35 转</span>
     <span class="meta-inline"><span class="meta-chip muted">06/02 04:14</span></span>
   </div>
   <p class="article-excerpt">Most AI agent memory is built on embeddings. And there&#39;s now a proof that this entire class of system is going to forget what you stored in it — and confidently make up things you never stored at all.</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 讨论智能体记忆的结构性缺陷：仅靠向量嵌入会遗忘已存内容，甚至自信编造不存在的信息。重点转向「上下文拓扑」，用结构化记忆逃离相似度检索局限。</p>
+  <details class="article-details">
+    <summary>中文介绍</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">讨论智能体记忆的结构性缺陷：仅靠向量嵌入会遗忘已存内容，甚至自信编造不存在的信息。重点转向「上下文拓扑」，用结构化记忆逃离相似度检索局限。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://x.com/elpresidank/status/2061768508577321257" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://x.com/1salman/status/2061262920244412880" target="_blank" rel="noopener noreferrer">Range and Depth on Demand </a></h3>
-    <a class="article-cta" href="https://x.com/1salman/status/2061262920244412880" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     <span class="article-stats">@1salman · 363 粉丝 · 2.0M 阅 · 682 赞 · 45 转</span>
     <span class="meta-inline"><span class="meta-chip muted">05/31 18:45</span></span>
   </div>
   <p class="article-excerpt">Everyone keeps asking whether AI favors specialists or generalists. I think that is the wrong question. AI does not pick a side. It changes the tradeoff. The old world forced a choice. You could go</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 重新拆解人工智能时代的专家与通才之争：问题不在二选一，而是技术改变了广度和深度的取舍。核心观点是按需扩展能力，重新配置个人知识结构。</p>
+  <details class="article-details">
+    <summary>中文介绍</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">重新拆解人工智能时代的专家与通才之争：问题不在二选一，而是技术改变了广度和深度的取舍。核心观点是按需扩展能力，重新配置个人知识结构。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://x.com/1salman/status/2061262920244412880" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://x.com/prukalpa/status/2061512556590809342" target="_blank" rel="noopener noreferrer">What an Enterprise Context Layer Actually Is </a></h3>
-    <a class="article-cta" href="https://x.com/prukalpa/status/2061512556590809342" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     <span class="article-stats">@prukalpa · 23.1K 粉丝 · 583.2K 阅 · 506 赞 · 80 转</span>
     <span class="meta-inline"><span class="meta-chip muted">06/01 11:17</span></span>
   </div>
   <p class="article-excerpt">A field guide to what it is, what it is not, and where it fits in your AI architecture. I have had some version of the same conversation with a CIO almost every day this year. Their team has read</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 面向企业信息主管解释「企业上下文层」：它在人工智能架构中承担什么、不是什么、该放在哪里。角度偏架构科普，回应企业落地中反复出现的概念混淆。</p>
+  <details class="article-details">
+    <summary>中文介绍</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">面向企业信息主管解释「企业上下文层」：它在人工智能架构中承担什么、不是什么、该放在哪里。角度偏架构科普，回应企业落地中反复出现的概念混淆。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://x.com/prukalpa/status/2061512556590809342" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://x.com/theonejvo/status/2061508425008476197" target="_blank" rel="noopener noreferrer">hacking pewdiepie&#39;s AI agent harness using an evil cocomelon website (then helping protect it)</a></h3>
-    <a class="article-cta" href="https://x.com/theonejvo/status/2061508425008476197" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     <span class="article-stats">@theonejvo · 22.1K 粉丝 · 504.3K 阅 · 861 赞 · 1 转</span>
     <span class="meta-inline"><span class="meta-chip muted">06/01 11:01</span></span>
   </div>
   <p class="article-excerpt">Over the past year, @pewdiepie, has been turning into one of the most visible champions of private, self-hosted computing, and it has been a genuine pleasure to watch. What began in late 2025 as an</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 安全案例复盘：通过恶意儿童网站攻击知名博主的私有自托管智能体系统，随后协助加固防护。重点在智能体运行环境、网页输入与权限边界的现实风险。</p>
+  <details class="article-details">
+    <summary>中文介绍</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">安全案例复盘：通过恶意儿童网站攻击知名博主的私有自托管智能体系统，随后协助加固防护。重点在智能体运行环境、网页输入与权限边界的现实风险。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://x.com/theonejvo/status/2061508425008476197" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://x.com/garrytan/status/2061454423034110372" target="_blank" rel="noopener noreferrer">Stop building Foxconn factories for your agents</a></h3>
-    <a class="article-cta" href="https://x.com/garrytan/status/2061454423034110372" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     <span class="article-stats">@garrytan · 853.3K 粉丝 · 180.6K 阅 · 503 赞 · 43 转</span>
     <span class="meta-inline"><span class="meta-chip muted">06/01 07:26</span></span>
   </div>
   <p class="article-excerpt">In January I got back into coding and I built Garry&#39;s List. Over five hundred thousand lines of Rails and the tests to police it. I was proud of it. I shouldn&#39;t have been. The thing worth being proud</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 用自己重回编程、写出五十多万行代码的经历反思智能体开发：不该把智能体当代工厂堆产能，真正值得骄傲的是系统设计、测试约束和可维护工作流。</p>
+  <details class="article-details">
+    <summary>中文介绍</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">用自己重回编程、写出五十多万行代码的经历反思智能体开发：不该把智能体当代工厂堆产能，真正值得骄傲的是系统设计、测试约束和可维护工作流。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://x.com/garrytan/status/2061454423034110372" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://x.com/dair_ai/status/2061104052818108476" target="_blank" rel="noopener noreferrer">🥇Top AI Papers of the Week </a></h3>
-    <a class="article-cta" href="https://x.com/dair_ai/status/2061104052818108476" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     <span class="article-stats">@dair_ai · 124.6K 粉丝 · 84.0K 阅 · 504 赞 · 83 转</span>
     <span class="meta-inline"><span class="meta-chip muted">05/31 08:14</span></span>
   </div>
   <p class="article-excerpt">1. SkillOpt Microsoft Research treats a compact natural-language skill document as the trainable state of a frozen agent, then learns that document through rollouts, reflection, and bounded edits</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 每周人工智能论文精选，开篇介绍微软研究的技能优化方法：把紧凑自然语言技能文档作为冻结智能体的可训练状态，通过试运行、反思和有限编辑迭代学习。</p>
+  <details class="article-details">
+    <summary>中文介绍</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">每周人工智能论文精选，开篇介绍微软研究的技能优化方法：把紧凑自然语言技能文档作为冻结智能体的可训练状态，通过试运行、反思和有限编辑迭代学习。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://x.com/dair_ai/status/2061104052818108476" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://x.com/trq212/status/2061907337154367865" target="_blank" rel="noopener noreferrer">A harness for every task: dynamic workflows in Claude Code </a></h3>
-    <a class="article-cta" href="https://x.com/trq212/status/2061907337154367865" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     <span class="article-stats">@trq212 · 263.1K 粉丝 · 75.7K 阅 · 542 赞 · 36 转</span>
     <span class="meta-inline"><span class="meta-chip muted">06/02 13:26</span></span>
   </div>
   <p class="article-excerpt">Last week, we released dynamic workflows in Claude Code. Claude can now write its own harness on the fly, custom-built for the task at hand. While the default Claude Code harness is built for coding,</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 介绍克劳德代码的新动态工作流：模型可为具体任务即时编写专属执行框架，而不局限默认编程流程。核心是让智能体按任务自适应组织工具、步骤和验证方式。</p>
+  <details class="article-details">
+    <summary>中文介绍</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">介绍克劳德代码的新动态工作流：模型可为具体任务即时编写专属执行框架，而不局限默认编程流程。核心是让智能体按任务自适应组织工具、步骤和验证方式。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://x.com/trq212/status/2061907337154367865" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://x.com/mvanhorn/status/2061877533885473181" target="_blank" rel="noopener noreferrer">Every Agentic Engineering Hack I Know (June 2026)</a></h3>
-    <a class="article-cta" href="https://x.com/mvanhorn/status/2061877533885473181" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     <span class="article-stats">@mvanhorn · 27.6K 粉丝 · 54.5K 阅 · 545 赞 · 44 转</span>
     <span class="meta-inline"><span class="meta-chip muted">06/02 11:28</span></span>
   </div>
   <p class="article-excerpt">Three months ago I posted &quot;Every Claude Code Hack I Know.&quot; It hit 913K views. @kevinrose had asked what IDE to use, and my answer was: &quot;No IDE. Just plan.md files and voice.&quot; This used to be called</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 汇总二〇二六年六月的智能体工程技巧，延续此前九十一万浏览的克劳德代码经验帖。主张少依赖集成开发环境，用计划文档和语音驱动规划、执行与协作。</p>
+  <details class="article-details">
+    <summary>中文介绍</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">汇总二〇二六年六月的智能体工程技巧，延续此前九十一万浏览的克劳德代码经验帖。主张少依赖集成开发环境，用计划文档和语音驱动规划、执行与协作。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://x.com/mvanhorn/status/2061877533885473181" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://x.com/0xJeff/status/2061361760968560887" target="_blank" rel="noopener noreferrer">6 Workflows, 6 Lessons, 60 Days with Hermes Analyst</a></h3>
-    <a class="article-cta" href="https://x.com/0xJeff/status/2061361760968560887" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     <span class="article-stats">@0xJeff · 80.5K 粉丝 · 47.0K 阅 · 512 赞 · 45 转</span>
     <span class="meta-inline"><span class="meta-chip muted">06/01 01:18</span></span>
   </div>
   <p class="article-excerpt">It’s been a little more than 2 months now and Hermes has taught me so many different things. One of the key things is that Agents like Hermes or OpenClaw don’t fail on intelligence, they tend to fail</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 复盘两个月使用赫尔墨斯分析师的六个工作流和六条经验：这类智能体通常不是败在智力，而是败在流程、上下文、权限和反馈回路等工程化环节。</p>
+  <details class="article-details">
+    <summary>中文介绍</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">复盘两个月使用赫尔墨斯分析师的六个工作流和六条经验：这类智能体通常不是败在智力，而是败在流程、上下文、权限和反馈回路等工程化环节。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://x.com/0xJeff/status/2061361760968560887" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://x.com/OptimaiNetwork/status/2061820160046997592" target="_blank" rel="noopener noreferrer">May Recap, June Direction: Building the Agent-Native Internet</a></h3>
-    <a class="article-cta" href="https://x.com/OptimaiNetwork/status/2061820160046997592" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     <span class="article-stats">@OptimaiNetwork · 98.8K 粉丝 · 5.7K 阅 · 542 赞 · 110 转</span>
     <span class="meta-inline"><span class="meta-chip muted">06/02 07:40</span></span>
   </div>
   <p class="article-excerpt">May was an important month for OptimAI because it marked a shift from proving the product to expanding the platform. The broader market is moving in the same direction: AI is no longer just about</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 项目月度进展与六月方向：从验证产品转向扩展平台，押注「智能体原生互联网」。视角偏产品路线，强调人工智能不再只是工具，而是新的网络参与者。</p>
+  <details class="article-details">
+    <summary>中文介绍</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">项目月度进展与六月方向：从验证产品转向扩展平台，押注「智能体原生互联网」。视角偏产品路线，强调人工智能不再只是工具，而是新的网络参与者。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://x.com/OptimaiNetwork/status/2061820160046997592" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
   </div>
@@ -1337,211 +1562,286 @@
     <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://huggingface.co/blog/Dharma-AI/direct-preference-optimization-beyond-chatbots" target="_blank" rel="noopener noreferrer">Direct Preference Optimization Beyond Chatbots</a></h3>
-    <a class="article-cta" href="https://huggingface.co/blog/Dharma-AI/direct-preference-optimization-beyond-chatbots" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip">Hugging Face Blog</span><span class="meta-chip muted">06/03 05:55</span></span>
   </div>
   
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 拥抱脸博客文章讨论直接偏好优化在聊天机器人之外的用途，聚焦该训练方法如何扩展到更广泛人工智能应用场景。</p>
+  <details class="article-details">
+    <summary>中文介绍</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">拥抱脸博客文章讨论直接偏好优化在聊天机器人之外的用途，聚焦该训练方法如何扩展到更广泛人工智能应用场景。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://huggingface.co/blog/Dharma-AI/direct-preference-optimization-beyond-chatbots" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://www.latent.space/p/ainews-microsoft-build-mai-thinking" target="_blank" rel="noopener noreferrer">[AINews] Microsoft Build: MAI-Thinking-1 and MAI Family models</a></h3>
-    <a class="article-cta" href="https://www.latent.space/p/ainews-microsoft-build-mai-thinking" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip">Latent Space</span><span class="meta-chip muted">06/02 22:49</span></span>
   </div>
   <p class="article-excerpt">Microsoft Build recap, and new MAI model technical details</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 潜在空间回顾微软开发者大会，介绍迈思考一号及迈系列模型的技术细节，重点涉及模型架构、能力定位和发布进展。</p>
+  <details class="article-details">
+    <summary>中文介绍</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">潜在空间回顾微软开发者大会，介绍迈思考一号及迈系列模型的技术细节，重点涉及模型架构、能力定位和发布进展。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://www.latent.space/p/ainews-microsoft-build-mai-thinking" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://tldr.tech/ai/2026-06-03" target="_blank" rel="noopener noreferrer">Codex Sites 💻, Microsoft models 🤖, Anthropic cost backlash 💸</a></h3>
-    <a class="article-cta" href="https://tldr.tech/ai/2026-06-03" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip">TLDR AI</span><span class="meta-chip muted">06/02 17:00</span></span>
   </div>
   
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 简讯提及开放人工智能代码站点、微软模型及安斯罗匹克成本争议等人工智能动态，因摘要缺失，未披露更多细节。</p>
+  <details class="article-details">
+    <summary>中文介绍</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">简讯提及开放人工智能代码站点、微软模型及安斯罗匹克成本争议等人工智能动态，因摘要缺失，未披露更多细节。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://tldr.tech/ai/2026-06-03" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://www.latent.space/p/github" target="_blank" rel="noopener noreferrer">GitHub&#39;s plan for Agents — Kyle Daigle, GitHub</a></h3>
-    <a class="article-cta" href="https://www.latent.space/p/github" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip">Latent Space</span><span class="meta-chip muted">06/02 09:48</span></span>
   </div>
   <p class="article-excerpt">GitHub pioneered the modern AI coding era with Copilot, and the resulting explosion in agentic coding has led to notable strains on the most popular developer platform in the world. Here&#39;s the plan.</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 微软旗下代码托管平台曾以代码助手推动现代人工智能编程浪潮，但代理式编程激增令平台承压；凯尔·戴格尔介绍其代理规划。</p>
+  <details class="article-details">
+    <summary>中文介绍</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">微软旗下代码托管平台曾以代码助手推动现代人工智能编程浪潮，但代理式编程激增令平台承压；凯尔·戴格尔介绍其代理规划。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://www.latent.space/p/github" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://huggingface.co/blog/Hcompany/holo31" target="_blank" rel="noopener noreferrer">Holo3.1: Fast &amp; Local Computer Use Agents</a></h3>
-    <a class="article-cta" href="https://huggingface.co/blog/Hcompany/holo31" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip">Hugging Face Blog</span><span class="meta-chip muted">06/02 07:13</span></span>
   </div>
   
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 拥抱脸博客介绍全息三点一，定位为快速、本地运行的电脑使用代理，重点在本机执行任务与提升自动化操作效率。</p>
+  <details class="article-details">
+    <summary>中文介绍</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">拥抱脸博客介绍全息三点一，定位为快速、本地运行的电脑使用代理，重点在本机执行任务与提升自动化操作效率。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://huggingface.co/blog/Hcompany/holo31" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://openai.com/index/travelers" target="_blank" rel="noopener noreferrer">Travelers deploys AI-powered claims countrywide with OpenAI</a></h3>
-    <a class="article-cta" href="https://openai.com/index/travelers" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip">OpenAI News</span><span class="meta-chip muted">06/02 05:00</span></span>
   </div>
   <p class="article-excerpt">Travelers built an AI-powered Claim Assistant with OpenAI to guide customers through filing claims, provide 24/7 support, and scale operations during peak demand.</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 美国旅行者保险与开放人工智能合作，推出人工智能理赔助手，在全美引导客户提交索赔、提供全天候支持，并在需求高峰扩展运营。</p>
+  <details class="article-details">
+    <summary>中文介绍</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">美国旅行者保险与开放人工智能合作，推出人工智能理赔助手，在全美引导客户提交索赔、提供全天候支持，并在需求高峰扩展运营。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://openai.com/index/travelers" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://www.technologyreview.com/2026/06/02/1137827/rehumanizing-global-health-care-with-agentic-ai/" target="_blank" rel="noopener noreferrer">Rehumanizing global health care with agentic AI</a></h3>
-    <a class="article-cta" href="https://www.technologyreview.com/2026/06/02/1137827/rehumanizing-global-health-care-with-agentic-ai/" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip">MIT Tech Review AI</span><span class="meta-chip muted">06/02 04:23</span></span>
   </div>
   <p class="article-excerpt">The global health care sector is under increasing strain. Decades of chronic underinvestment and constraints in recruitment have coincided with a surge in demand for services for aging populations. Gaps in provision are already taking a toll, with fragmented access to care and high rates of stress a</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 麻省理工科技评论称，全球医疗体系因长期投资不足、招聘受限和老龄化需求上升承压；代理式人工智能被讨论用于改善护理可及性。</p>
+  <details class="article-details">
+    <summary>中文介绍</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">麻省理工科技评论称，全球医疗体系因长期投资不足、招聘受限和老龄化需求上升承压；代理式人工智能被讨论用于改善护理可及性。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://www.technologyreview.com/2026/06/02/1137827/rehumanizing-global-health-care-with-agentic-ai/" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://openai.com/index/codex-for-every-role-tool-workflow" target="_blank" rel="noopener noreferrer">Codex for every role, tool, and workflow</a></h3>
-    <a class="article-cta" href="https://openai.com/index/codex-for-every-role-tool-workflow" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip">OpenAI News</span><span class="meta-chip muted">06/02 02:00</span></span>
   </div>
   <p class="article-excerpt">Discover new Codex plugins, sites, and annotations that help analysts, marketers, designers, investors, and other teams get more done with AI.</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 开放人工智能发布代码助手新插件、站点和注释功能，面向分析师、营销、设计师、投资者等团队，帮助不同工具与工作流提升产出。</p>
+  <details class="article-details">
+    <summary>中文介绍</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">开放人工智能发布代码助手新插件、站点和注释功能，面向分析师、营销、设计师、投资者等团队，帮助不同工具与工作流提升产出。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://openai.com/index/codex-for-every-role-tool-workflow" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://www.technologyreview.com/2026/06/02/1138227/how-small-businesses-can-leverage-ai/" target="_blank" rel="noopener noreferrer">How small businesses can leverage AI</a></h3>
-    <a class="article-cta" href="https://www.technologyreview.com/2026/06/02/1138227/how-small-businesses-can-leverage-ai/" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip">MIT Tech Review AI</span><span class="meta-chip muted">06/02 02:00</span></span>
   </div>
   <p class="article-excerpt">This article is from Making AI Work, MIT Technology Review’s limited-run newsletter examining how to apply LLMs across industries. To receive it in your inbox,sign up here. From accounting to design to market research and product development, there’s a staggering breadth of skills needed to run a bu</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 麻省理工科技评论在人工智能应用通讯中称，小企业可在会计、设计、市场研究和产品开发等环节使用大语言模型提升技能覆盖和效率。</p>
+  <details class="article-details">
+    <summary>中文介绍</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">麻省理工科技评论在人工智能应用通讯中称，小企业可在会计、设计、市场研究和产品开发等环节使用大语言模型提升技能覆盖和效率。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://www.technologyreview.com/2026/06/02/1138227/how-small-businesses-can-leverage-ai/" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://openai.com/index/advancing-youth-safety-and-opportunity-through-global-leadership" target="_blank" rel="noopener noreferrer">Advancing youth safety and opportunity through global leadership</a></h3>
-    <a class="article-cta" href="https://openai.com/index/advancing-youth-safety-and-opportunity-through-global-leadership" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip">OpenAI News</span><span class="meta-chip muted">06/02 00:00</span></span>
   </div>
   <p class="article-excerpt">OpenAI calls for global action on youth AI safety, proposing an international institute to strengthen safeguards, standards, and opportunities for young people.</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 开放人工智能呼吁各国加强青少年人工智能安全合作，提议设立国际机构，推动防护措施、标准和机会建设，降低年轻人使用风险。</p>
+  <details class="article-details">
+    <summary>中文介绍</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">开放人工智能呼吁各国加强青少年人工智能安全合作，提议设立国际机构，推动防护措施、标准和机会建设，降低年轻人使用风险。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://openai.com/index/advancing-youth-safety-and-opportunity-through-global-leadership" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://news.smol.ai/issues/26-06-02-msft-mai-2/" target="_blank" rel="noopener noreferrer">Microsoft Build: MAI-Thinking-1 and MAI Family models, Surface RTX Spark Dev Box, and OpenClaw in Windows</a></h3>
-    <a class="article-cta" href="https://news.smol.ai/issues/26-06-02-msft-mai-2/" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip">Smol AI News</span><span class="meta-chip muted">06/01 22:44</span></span>
   </div>
   <p class="article-excerpt">**Microsoft** introduced **MAI-Thinking-1**, a **35B parameter MoE model** with **256K context**, achieving **97% on AIME 2025** and outperforming **Sonnet 4.6** in human preference tests. The broader **7-model MAI family** spans reasoning, code, image, speech, and voice, with third-party availabili</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 微软推出迈思考一号，采用350亿参数混合专家模型、25.6万上下文，在2025数学竞赛基准得分97%，人类偏好测试超过十四行诗4.6；迈系列含7个模型。</p>
+  <details class="article-details">
+    <summary>中文介绍</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">微软推出迈思考一号，采用350亿参数混合专家模型、25.6万上下文，在2025数学竞赛基准得分97%，人类偏好测试超过十四行诗4.6；迈系列含7个模型。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://news.smol.ai/issues/26-06-02-msft-mai-2/" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://www.latent.space/p/ainews-nvidia-cosmos-3-nemotron-3" target="_blank" rel="noopener noreferrer">[AINews] NVIDIA Cosmos 3, Nemotron 3 Ultra, and RTX Spark</a></h3>
-    <a class="article-cta" href="https://www.latent.space/p/ainews-nvidia-cosmos-3-nemotron-3" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip">Latent Space</span><span class="meta-chip muted">06/01 20:28</span></span>
   </div>
   <p class="article-excerpt">Jensen scores a huge win.</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 潜在空间简讯称，英伟达发布宇宙三号、尼莫创三号超版和光追火花等人工智能与开发硬件相关内容，认为黄仁勋取得重要进展。</p>
+  <details class="article-details">
+    <summary>中文介绍</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">潜在空间简讯称，英伟达发布宇宙三号、尼莫创三号超版和光追火花等人工智能与开发硬件相关内容，认为黄仁勋取得重要进展。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://www.latent.space/p/ainews-nvidia-cosmos-3-nemotron-3" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://openai.com/index/codex-for-knowledge-work" target="_blank" rel="noopener noreferrer">Codex is becoming a productivity tool for everyone</a></h3>
-    <a class="article-cta" href="https://openai.com/index/codex-for-knowledge-work" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip">OpenAI News</span><span class="meta-chip muted">06/01 19:00</span></span>
   </div>
   <p class="article-excerpt">The Next Era of Knowledge Work report explores how Codex is transforming productivity through AI-powered research, data analysis, workflow automation, and content creation.</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 开放人工智能发布下一代知识工作报告，称代码助手正通过人工智能研究、数据分析、工作流自动化和内容创作，扩展为通用生产力工具。</p>
+  <details class="article-details">
+    <summary>中文介绍</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">开放人工智能发布下一代知识工作报告，称代码助手正通过人工智能研究、数据分析、工作流自动化和内容创作，扩展为通用生产力工具。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://openai.com/index/codex-for-knowledge-work" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://tldr.tech/ai/2026-06-02" target="_blank" rel="noopener noreferrer">Anthropic IPO filing 📄, OpenAI on AWS ☁️, Perplexity search code 🔍</a></h3>
-    <a class="article-cta" href="https://tldr.tech/ai/2026-06-02" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip">TLDR AI</span><span class="meta-chip muted">06/01 17:00</span></span>
   </div>
   
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 简讯提及安斯罗匹克首次公开募股文件、开放人工智能使用亚马逊云服务，以及困惑搜索代码等人工智能行业动态；摘要未披露更多细节。</p>
+  <details class="article-details">
+    <summary>中文介绍</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">简讯提及安斯罗匹克首次公开募股文件、开放人工智能使用亚马逊云服务，以及困惑搜索代码等人工智能行业动态；摘要未披露更多细节。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://tldr.tech/ai/2026-06-02" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://openai.com/index/our-views-on-ai-policy-and-political-advocacy" target="_blank" rel="noopener noreferrer">Our views on AI policy and political advocacy</a></h3>
-    <a class="article-cta" href="https://openai.com/index/our-views-on-ai-policy-and-political-advocacy" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip">OpenAI News</span><span class="meta-chip muted">06/01 10:00</span></span>
   </div>
   <p class="article-excerpt">Our approach to AI policy and political advocacy, transparency, support for thoughtful regulation and AI safety, and that no outside political group speaks on the company’s behalf.</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 开放人工智能阐述其人工智能政策和政治倡议立场，强调透明度、支持审慎监管和安全，并称没有外部政治团体代表公司发声。</p>
+  <details class="article-details">
+    <summary>中文介绍</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">开放人工智能阐述其人工智能政策和政治倡议立场，强调透明度、支持审慎监管和安全，并称没有外部政治团体代表公司发声。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://openai.com/index/our-views-on-ai-policy-and-political-advocacy" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
   </div>
@@ -2168,211 +2468,286 @@
     <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://www.nytimes.com/live/2026/06/03/world/iran-war-trump-israel-lebanon" target="_blank" rel="noopener noreferrer">Iran War Live Updates: Kuwait Says One Killed and Dozens Injured in Iranian Attack on Airport</a></h3>
-    <a class="article-cta" href="https://www.nytimes.com/live/2026/06/03/world/iran-war-trump-israel-lebanon" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip">NYT World</span><span class="meta-chip muted">06/03 06:19</span></span>
   </div>
   <p class="article-excerpt">The United States and Iran accused each other of launching new strikes. President Trump told The New York Post that Iran’s supreme leader is involved in peace talks, and he hopes to meet him.</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文摘要</span> 美国和伊朗相互指责对方发动新一轮打击。特朗普称伊朗最高领袖参与和平谈判，并希望与其会面；科威特称机场遭袭致一死数十伤。</p>
+  <details class="article-details">
+    <summary>中文摘要</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">美国和伊朗相互指责对方发动新一轮打击。特朗普称伊朗最高领袖参与和平谈判，并希望与其会面；科威特称机场遭袭致一死数十伤。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://www.nytimes.com/live/2026/06/03/world/iran-war-trump-israel-lebanon" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://www.aljazeera.com/news/2026/6/3/why-is-france-so-invested-in-the-future-of-lebanon?traffic_source=rss" target="_blank" rel="noopener noreferrer">Why is France so invested in the future of Lebanon?</a></h3>
-    <a class="article-cta" href="https://www.aljazeera.com/news/2026/6/3/why-is-france-so-invested-in-the-future-of-lebanon?traffic_source=rss" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip">Al Jazeera</span><span class="meta-chip muted">06/03 06:09</span></span>
   </div>
   <p class="article-excerpt">Analysts say France is hoping to reassert its diminishing influence in the region.</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文摘要</span> 半岛电视台称，分析人士认为法国持续关注黎巴嫩未来，是希望在中东地区重新巩固其已减弱的政治和外交影响力。</p>
+  <details class="article-details">
+    <summary>中文摘要</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">半岛电视台称，分析人士认为法国持续关注黎巴嫩未来，是希望在中东地区重新巩固其已减弱的政治和外交影响力。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://www.aljazeera.com/news/2026/6/3/why-is-france-so-invested-in-the-future-of-lebanon?traffic_source=rss" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://www.nytimes.com/live/2026/06/03/world/iran-war-trump-israel-lebanon/heres-where-us-troops-are-stationed-in-the-gulf" target="_blank" rel="noopener noreferrer">Here’s where U.S. troops are stationed in the Gulf.</a></h3>
-    <a class="article-cta" href="https://www.nytimes.com/live/2026/06/03/world/iran-war-trump-israel-lebanon/heres-where-us-troops-are-stationed-in-the-gulf" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip">NYT World</span><span class="meta-chip muted">06/03 06:04</span></span>
   </div>
   
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文摘要</span> 纽约时报条目介绍美国军队在海湾地区的驻扎地点，但摘录未提供具体基地、兵力规模或相关部署变化等进一步信息。</p>
+  <details class="article-details">
+    <summary>中文摘要</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">纽约时报条目介绍美国军队在海湾地区的驻扎地点，但摘录未提供具体基地、兵力规模或相关部署变化等进一步信息。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://www.nytimes.com/live/2026/06/03/world/iran-war-trump-israel-lebanon/heres-where-us-troops-are-stationed-in-the-gulf" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://www.bbc.com/news/articles/c775x852rk1o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">He was a reality show villain. Can he be the mayor of one of America&#39;s largest cities?</a></h3>
-    <a class="article-cta" href="https://www.bbc.com/news/articles/c775x852rk1o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip">BBC World</span><span class="meta-chip muted">06/03 06:04</span></span>
   </div>
   <p class="article-excerpt">Republican Spencer Pratt, known for his TV role on The Hills, appears to be in a tight race with two Democrats in Los Angeles.</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文摘要</span> 共和党人斯宾塞·普拉特因出演真人秀《好莱坞女孩》知名，目前在洛杉矶市长竞选中与两名民主党人竞争，选情接近。</p>
+  <details class="article-details">
+    <summary>中文摘要</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">共和党人斯宾塞·普拉特因出演真人秀《好莱坞女孩》知名，目前在洛杉矶市长竞选中与两名民主党人竞争，选情接近。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://www.bbc.com/news/articles/c775x852rk1o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://www.theguardian.com/world/2026/jun/03/us-fires-missile-tanker-strait-of-hormuz" target="_blank" rel="noopener noreferrer">One killed and several wounded in Iranian attack on Kuwait’s international airport</a></h3>
-    <a class="article-cta" href="https://www.theguardian.com/world/2026/jun/03/us-fires-missile-tanker-strait-of-hormuz" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip">The Guardian</span><span class="meta-chip muted">06/03 06:04</span></span>
   </div>
   <p class="article-excerpt">US and Iran exchange more strikes across Gulf region, jeopardising efforts to secure a new ceasefire Middle East crisis – live updates Kuwait’s military said Iranian strikes that hit a terminal at its international airport caused significant damage, killed at least one person and wounded several oth</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文摘要</span> 科威特军方称，伊朗袭击该国国际机场一处航站楼，造成重大损坏，至少一人死亡、多人受伤；美伊在海湾地区继续交火。</p>
+  <details class="article-details">
+    <summary>中文摘要</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">科威特军方称，伊朗袭击该国国际机场一处航站楼，造成重大损坏，至少一人死亡、多人受伤；美伊在海湾地区继续交火。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://www.theguardian.com/world/2026/jun/03/us-fires-missile-tanker-strait-of-hormuz" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://www.aljazeera.com/video/newsfeed/2026/6/3/kuwait-and-bahrain-attacked-as-iran-launches-missile-and-drone-barrage?traffic_source=rss" target="_blank" rel="noopener noreferrer">Kuwait and Bahrain attacked as Iran launches missile and drone barrage</a></h3>
-    <a class="article-cta" href="https://www.aljazeera.com/video/newsfeed/2026/6/3/kuwait-and-bahrain-attacked-as-iran-launches-missile-and-drone-barrage?traffic_source=rss" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip">Al Jazeera</span><span class="meta-chip muted">06/03 05:56</span></span>
   </div>
   <p class="article-excerpt">Kuwait and Bahrain attacked as Iran launches missile and drone barrage</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文摘要</span> 半岛电视台称，伊朗发动导弹和无人机密集袭击，科威特和巴林成为目标；报道未提供具体伤亡、损失或袭击地点细节。</p>
+  <details class="article-details">
+    <summary>中文摘要</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">半岛电视台称，伊朗发动导弹和无人机密集袭击，科威特和巴林成为目标；报道未提供具体伤亡、损失或袭击地点细节。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://www.aljazeera.com/video/newsfeed/2026/6/3/kuwait-and-bahrain-attacked-as-iran-launches-missile-and-drone-barrage?traffic_source=rss" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://www.nytimes.com/live/2026/06/03/world/iran-war-trump-israel-lebanon/heres-the-latest" target="_blank" rel="noopener noreferrer">Here’s the latest.</a></h3>
-    <a class="article-cta" href="https://www.nytimes.com/live/2026/06/03/world/iran-war-trump-israel-lebanon/heres-the-latest" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip">NYT World</span><span class="meta-chip muted">06/03 05:42</span></span>
   </div>
   
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文摘要</span> 纽约时报中东局势直播条目仅标注为最新进展，未在摘录中提供具体事件、相关方、地点、伤亡或外交动向等信息。</p>
+  <details class="article-details">
+    <summary>中文摘要</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">纽约时报中东局势直播条目仅标注为最新进展，未在摘录中提供具体事件、相关方、地点、伤亡或外交动向等信息。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://www.nytimes.com/live/2026/06/03/world/iran-war-trump-israel-lebanon/heres-the-latest" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://www.aljazeera.com/video/counting-the-cost/2026/6/3/is-asia-facing-a-new-currency-crisis?traffic_source=rss" target="_blank" rel="noopener noreferrer">Is Asia facing a new currency crisis?</a></h3>
-    <a class="article-cta" href="https://www.aljazeera.com/video/counting-the-cost/2026/6/3/is-asia-facing-a-new-currency-crisis?traffic_source=rss" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip">Al Jazeera</span><span class="meta-chip muted">06/03 05:40</span></span>
   </div>
   <p class="article-excerpt">A stronger dollar, higher energy costs and market uncertainty are putting pressure on currencies across Asia.</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文摘要</span> 半岛电视台称，美元走强、能源成本上升和市场不确定性正对亚洲多国货币形成压力，引发外界对新一轮货币危机的担忧。</p>
+  <details class="article-details">
+    <summary>中文摘要</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">半岛电视台称，美元走强、能源成本上升和市场不确定性正对亚洲多国货币形成压力，引发外界对新一轮货币危机的担忧。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://www.aljazeera.com/video/counting-the-cost/2026/6/3/is-asia-facing-a-new-currency-crisis?traffic_source=rss" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://www.nytimes.com/2026/06/03/world/middleeast/iran-attacks-kuwait-bahrain-ceasefire.html" target="_blank" rel="noopener noreferrer">Attacks on Kuwait and Bahrain Add Further Strain to U.S.-Iran Cease-Fire</a></h3>
-    <a class="article-cta" href="https://www.nytimes.com/2026/06/03/world/middleeast/iran-attacks-kuwait-bahrain-ceasefire.html" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip">NYT World</span><span class="meta-chip muted">06/03 05:37</span></span>
   </div>
   <p class="article-excerpt">One person was killed in an attack on the international airport in Kuwait, local authorities said, as Iran continues to target U.S. allies in the Persian Gulf.</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文摘要</span> 科威特和巴林遭袭使美伊停火承压。当地官员称，科威特国际机场遇袭造成一人死亡；伊朗继续针对波斯湾美国盟友。</p>
+  <details class="article-details">
+    <summary>中文摘要</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">科威特和巴林遭袭使美伊停火承压。当地官员称，科威特国际机场遇袭造成一人死亡；伊朗继续针对波斯湾美国盟友。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://www.nytimes.com/2026/06/03/world/middleeast/iran-attacks-kuwait-bahrain-ceasefire.html" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://www.nytimes.com/2026/06/03/world/europe/ukraine-russia-attack-st-petersburg-putin.html" target="_blank" rel="noopener noreferrer">Ukraine Strikes St. Petersburg on First Day of a Marquee Putin Event</a></h3>
-    <a class="article-cta" href="https://www.nytimes.com/2026/06/03/world/europe/ukraine-russia-attack-st-petersburg-putin.html" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip">NYT World</span><span class="meta-chip muted">06/03 05:30</span></span>
   </div>
   <p class="article-excerpt">As an annual economic conference was set to begin, President Volodymyr Zelensky said Ukraine had targeted a navy base and an oil terminal in the region that includes Russia’s second-largest city.</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文摘要</span> 在俄罗斯年度经济论坛开幕当天，泽连斯基称乌克兰袭击了圣彼得堡所在地区的海军基地和石油码头，目标涉及俄第二大城市周边。</p>
+  <details class="article-details">
+    <summary>中文摘要</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">在俄罗斯年度经济论坛开幕当天，泽连斯基称乌克兰袭击了圣彼得堡所在地区的海军基地和石油码头，目标涉及俄第二大城市周边。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://www.nytimes.com/2026/06/03/world/europe/ukraine-russia-attack-st-petersburg-putin.html" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://www.nytimes.com/2026/06/03/world/asia/fire-hotel-new-delhi-india.html" target="_blank" rel="noopener noreferrer">Fire at a New Delhi Hotel Kills at Least 21</a></h3>
-    <a class="article-cta" href="https://www.nytimes.com/2026/06/03/world/asia/fire-hotel-new-delhi-india.html" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip">NYT World</span><span class="meta-chip muted">06/03 05:29</span></span>
   </div>
   <p class="article-excerpt">Dozens more were injured, the authorities said. The blaze appears to be the deadliest in the Indian capital in at least four years.</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文摘要</span> 印度新德里一家酒店发生火灾，官方称至少二十一人死亡、数十人受伤。这起火灾可能是印度首都至少四年来最严重火灾。</p>
+  <details class="article-details">
+    <summary>中文摘要</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">印度新德里一家酒店发生火灾，官方称至少二十一人死亡、数十人受伤。这起火灾可能是印度首都至少四年来最严重火灾。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://www.nytimes.com/2026/06/03/world/asia/fire-hotel-new-delhi-india.html" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://www.aljazeera.com/news/2026/6/3/does-uks-new-far-right-party-restore-pose-a-threat-to-farages-reform?traffic_source=rss" target="_blank" rel="noopener noreferrer">Does UK’s new far-right party, Restore, pose a threat to Farage’s Reform?</a></h3>
-    <a class="article-cta" href="https://www.aljazeera.com/news/2026/6/3/does-uks-new-far-right-party-restore-pose-a-threat-to-farages-reform?traffic_source=rss" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip">Al Jazeera</span><span class="meta-chip muted">06/03 05:27</span></span>
   </div>
   <p class="article-excerpt">Restore Britain’s manifesto has pledged to implement the &#39;most ambitious programme of mass deportations&#39;.</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文摘要</span> 英国新极右翼政党「复兴英国」在政纲中承诺实施「最雄心勃勃的大规模驱逐计划」，外界关注其是否威胁法拉奇的改革党。</p>
+  <details class="article-details">
+    <summary>中文摘要</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">英国新极右翼政党「复兴英国」在政纲中承诺实施「最雄心勃勃的大规模驱逐计划」，外界关注其是否威胁法拉奇的改革党。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://www.aljazeera.com/news/2026/6/3/does-uks-new-far-right-party-restore-pose-a-threat-to-farages-reform?traffic_source=rss" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://www.bbc.com/news/articles/c87q9d7r57yo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">The end of Trump&#39;s &#39;weaponisation&#39; fund is another sign Republicans are fighting back</a></h3>
-    <a class="article-cta" href="https://www.bbc.com/news/articles/c87q9d7r57yo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip">BBC World</span><span class="meta-chip muted">06/03 05:25</span></span>
   </div>
   <p class="article-excerpt">The $1.8bn fund would have paid people the Trump administration decided were unjustly and politically targeted.</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文摘要</span> 特朗普政府设立的十八亿美元「武器化」补偿基金终止，该基金原拟补偿被其认定遭不公正和政治性针对的人士。</p>
+  <details class="article-details">
+    <summary>中文摘要</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">特朗普政府设立的十八亿美元「武器化」补偿基金终止，该基金原拟补偿被其认定遭不公正和政治性针对的人士。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://www.bbc.com/news/articles/c87q9d7r57yo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://www.aljazeera.com/video/newsfeed/2026/6/3/video-teachers-in-northern-nigeria-protest-abduction-of-school-children?traffic_source=rss" target="_blank" rel="noopener noreferrer">Video: Teachers in northern Nigeria protest abduction of school children</a></h3>
-    <a class="article-cta" href="https://www.aljazeera.com/video/newsfeed/2026/6/3/video-teachers-in-northern-nigeria-protest-abduction-of-school-children?traffic_source=rss" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip">Al Jazeera</span><span class="meta-chip muted">06/03 05:23</span></span>
   </div>
   <p class="article-excerpt">Teachers in north-eastern Nigeria held protests, demanding stronger protection for learning institutions.</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文摘要</span> 尼日利亚东北部教师举行抗议，回应学生遭绑架事件，要求当局加强对学校和其他学习机构的安全保护。</p>
+  <details class="article-details">
+    <summary>中文摘要</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">尼日利亚东北部教师举行抗议，回应学生遭绑架事件，要求当局加强对学校和其他学习机构的安全保护。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://www.aljazeera.com/video/newsfeed/2026/6/3/video-teachers-in-northern-nigeria-protest-abduction-of-school-children?traffic_source=rss" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://www.theguardian.com/world/2026/jun/03/migrant-workers-burned-alive-in-car-in-italy" target="_blank" rel="noopener noreferrer">Four migrant workers reportedly burned alive in their car in attack in Italy</a></h3>
-    <a class="article-cta" href="https://www.theguardian.com/world/2026/jun/03/migrant-workers-burned-alive-in-car-in-italy" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip">The Guardian</span><span class="meta-chip muted">06/03 05:18</span></span>
   </div>
   <p class="article-excerpt">Petrol station attack in Calabria throws spotlight on widespread exploitation of foreign farm labourers The exploitation of farm workers in Italy has come under the spotlight again after four men – three Afghans and one from Pakistan – were allegedly burned alive in a car at a petrol station in Cala</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文摘要</span> 意大利卡拉布里亚一处加油站发生袭击，四名移民劳工据称在车内被烧死，其中三人为阿富汗人、一人为巴基斯坦人。</p>
+  <details class="article-details">
+    <summary>中文摘要</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">意大利卡拉布里亚一处加油站发生袭击，四名移民劳工据称在车内被烧死，其中三人为阿富汗人、一人为巴基斯坦人。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://www.theguardian.com/world/2026/jun/03/migrant-workers-burned-alive-in-car-in-italy" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
   </div>
@@ -2387,169 +2762,229 @@
     <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://www.bloomberg.com/news/articles/2026-06-03/kenya-to-press-ahead-with-us-ebola-center-health-secretary-says" target="_blank" rel="noopener noreferrer">Kenya to Press Ahead With US Ebola Center, Health Secretary Says</a></h3>
-    <a class="article-cta" href="https://www.bloomberg.com/news/articles/2026-06-03/kenya-to-press-ahead-with-us-ebola-center-health-secretary-says" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip">Bloomberg Markets</span><span class="meta-chip muted">06/03 06:16</span></span>
   </div>
   <p class="article-excerpt">Kenya will continue work on an isolation and treatment unit at an airbase in the East African nation that can be used to house US servicemen exposed to the Ebola virus, its health secretary said.</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文摘要</span> 肯尼亚卫生部长表示，将继续在该国一处空军基地建设隔离和治疗设施，可用于安置接触埃博拉病毒的美国军人。</p>
+  <details class="article-details">
+    <summary>中文摘要</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">肯尼亚卫生部长表示，将继续在该国一处空军基地建设隔离和治疗设施，可用于安置接触埃博拉病毒的美国军人。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://www.bloomberg.com/news/articles/2026-06-03/kenya-to-press-ahead-with-us-ebola-center-health-secretary-says" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://www.bloomberg.com/news/articles/2026-06-03/vedanta-unit-targets-ipo-in-new-york-to-fund-zambia-copper-mines" target="_blank" rel="noopener noreferrer">Vedanta Unit Targets IPO in New York to Fund Zambia Copper Mines</a></h3>
-    <a class="article-cta" href="https://www.bloomberg.com/news/articles/2026-06-03/vedanta-unit-targets-ipo-in-new-york-to-fund-zambia-copper-mines" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip">Bloomberg Markets</span><span class="meta-chip muted">06/03 06:05</span></span>
   </div>
   <p class="article-excerpt">A Vedanta Resources Ltd. unit has applied to sell its shares in New York as part of efforts to raise money for the Zambian copper mining complex it owns.</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文摘要</span> 韦丹塔资源旗下子公司已申请在纽约出售股份，计划通过上市融资，支持其拥有的赞比亚铜矿综合项目。</p>
+  <details class="article-details">
+    <summary>中文摘要</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">韦丹塔资源旗下子公司已申请在纽约出售股份，计划通过上市融资，支持其拥有的赞比亚铜矿综合项目。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://www.bloomberg.com/news/articles/2026-06-03/vedanta-unit-targets-ipo-in-new-york-to-fund-zambia-copper-mines" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://www.bloomberg.com/news/articles/2026-06-03/zambia-set-for-talks-with-bondholders-blocking-its-debt-buyback" target="_blank" rel="noopener noreferrer">Zambia Set for Talks With Bondholders Blocking Its Debt Buyback</a></h3>
-    <a class="article-cta" href="https://www.bloomberg.com/news/articles/2026-06-03/zambia-set-for-talks-with-bondholders-blocking-its-debt-buyback" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip">Bloomberg Markets</span><span class="meta-chip muted">06/03 06:03</span></span>
   </div>
   <p class="article-excerpt">Zambia’s government is heading to the negotiating table after a group of bondholders blocked its attempt to buy back a $1.36 billion bond before a potentially costly coupon increase.</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文摘要</span> 赞比亚政府将与债券持有人谈判。此前一组持有人阻止其回购13.6亿美元债券，该债券可能面临成本较高的票息上调。</p>
+  <details class="article-details">
+    <summary>中文摘要</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">赞比亚政府将与债券持有人谈判。此前一组持有人阻止其回购13.6亿美元债券，该债券可能面临成本较高的票息上调。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://www.bloomberg.com/news/articles/2026-06-03/zambia-set-for-talks-with-bondholders-blocking-its-debt-buyback" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://www.ft.com/content/dcc7c956-858c-4fed-9820-f87f73f7bf8d" target="_blank" rel="noopener noreferrer">Sorry Marc, it’s just not that big</a></h3>
-    <a class="article-cta" href="https://www.ft.com/content/dcc7c956-858c-4fed-9820-f87f73f7bf8d" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip">Financial Times</span><span class="meta-chip muted">06/03 05:50</span></span>
   </div>
   <p class="article-excerpt">Sizing up private credit</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文摘要</span> 英国金融时报文章讨论私人信贷市场规模，认为相关扩张或未如部分市场人士所称庞大，摘录未披露具体数据。</p>
+  <details class="article-details">
+    <summary>中文摘要</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">英国金融时报文章讨论私人信贷市场规模，认为相关扩张或未如部分市场人士所称庞大，摘录未披露具体数据。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://www.ft.com/content/dcc7c956-858c-4fed-9820-f87f73f7bf8d" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://www.bloomberg.com/news/articles/2026-06-03/ai-funding-boom-reaches-muni-market-with-google-tied-bond-sale" target="_blank" rel="noopener noreferrer">AI Funding Boom Reaches Muni Market With Google-Tied Bond Sale</a></h3>
-    <a class="article-cta" href="https://www.bloomberg.com/news/articles/2026-06-03/ai-funding-boom-reaches-muni-market-with-google-tied-bond-sale" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip">Bloomberg Markets</span><span class="meta-chip muted">06/03 05:33</span></span>
   </div>
   <p class="article-excerpt">Google parent Alphabet Inc. is poised to enter the municipal-bond market’s prepaid energy space by participating in a $1 billion transaction out of California, a major development in the evolution of a booming segment.</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文摘要</span> 谷歌母公司字母公司拟参与加州一笔10亿美元交易，进入市政债预付能源领域，显示人工智能融资热潮延伸至该市场。</p>
+  <details class="article-details">
+    <summary>中文摘要</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">谷歌母公司字母公司拟参与加州一笔10亿美元交易，进入市政债预付能源领域，显示人工智能融资热潮延伸至该市场。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://www.bloomberg.com/news/articles/2026-06-03/ai-funding-boom-reaches-muni-market-with-google-tied-bond-sale" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://www.bloomberg.com/news/articles/2026-06-03/us-stock-futures-fall-as-us-iran-flareup-threatens-peace-hopes" target="_blank" rel="noopener noreferrer">US Stock Futures Fall as US-Iran Flareup Threatens Peace Hopes</a></h3>
-    <a class="article-cta" href="https://www.bloomberg.com/news/articles/2026-06-03/us-stock-futures-fall-as-us-iran-flareup-threatens-peace-hopes" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip">Bloomberg Markets</span><span class="meta-chip muted">06/03 05:31</span></span>
   </div>
   <p class="article-excerpt">The rally in US stocks stalled before the bell on Wednesday as investors worried about the continued strain on a fragile ceasefire agreement between the US and Iran.</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文摘要</span> 周三盘前美国股指期货下跌，美股涨势暂歇。投资者担忧美国与伊朗紧张再起，威胁脆弱的停火协议。</p>
+  <details class="article-details">
+    <summary>中文摘要</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">周三盘前美国股指期货下跌，美股涨势暂歇。投资者担忧美国与伊朗紧张再起，威胁脆弱的停火协议。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://www.bloomberg.com/news/articles/2026-06-03/us-stock-futures-fall-as-us-iran-flareup-threatens-peace-hopes" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://www.bloomberg.com/news/articles/2026-06-03/options-traders-look-past-jobs-data-as-inflation-takes-spotlight" target="_blank" rel="noopener noreferrer">Options Traders Look Past Jobs Data as Inflation Takes Spotlight</a></h3>
-    <a class="article-cta" href="https://www.bloomberg.com/news/articles/2026-06-03/options-traders-look-past-jobs-data-as-inflation-takes-spotlight" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip">Bloomberg Markets</span><span class="meta-chip muted">06/03 05:29</span></span>
   </div>
   <p class="article-excerpt">Wall Street traders expect a strong jobs report on Friday. That may not be enough to soothe them, as the war-fueled oil price shock increasingly shifts the focus toward inflation.</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文摘要</span> 华尔街交易员预计周五就业报告强劲，但油价受战争冲击上行，使市场焦点转向通胀，就业数据或难以安抚情绪。</p>
+  <details class="article-details">
+    <summary>中文摘要</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">华尔街交易员预计周五就业报告强劲，但油价受战争冲击上行，使市场焦点转向通胀，就业数据或难以安抚情绪。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://www.bloomberg.com/news/articles/2026-06-03/options-traders-look-past-jobs-data-as-inflation-takes-spotlight" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://www.bloomberg.com/news/live-blog/2026-06-03/bloomberg-global-credit-forum" target="_blank" rel="noopener noreferrer">Clayton Says Private Credit Can Do Better Job at Transparency</a></h3>
-    <a class="article-cta" href="https://www.bloomberg.com/news/live-blog/2026-06-03/bloomberg-global-credit-forum" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip">Bloomberg Markets</span><span class="meta-chip muted">06/03 05:28</span></span>
   </div>
   
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文摘要</span> 克莱顿在彭博全球信贷论坛表示，私人信贷行业在透明度方面仍可做得更好；摘录未提供更多细节或具体数据。</p>
+  <details class="article-details">
+    <summary>中文摘要</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">克莱顿在彭博全球信贷论坛表示，私人信贷行业在透明度方面仍可做得更好；摘录未提供更多细节或具体数据。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://www.bloomberg.com/news/live-blog/2026-06-03/bloomberg-global-credit-forum" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://www.bloomberg.com/news/newsletters/2026-06-03/oil-s-hormuz-alternatives-offer-only-a-partial-fix" target="_blank" rel="noopener noreferrer">Oil’s Hormuz Alternatives Offer Only a Partial Fix</a></h3>
-    <a class="article-cta" href="https://www.bloomberg.com/news/newsletters/2026-06-03/oil-s-hormuz-alternatives-offer-only-a-partial-fix" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip">Bloomberg Markets</span><span class="meta-chip muted">06/03 05:17</span></span>
   </div>
   <p class="article-excerpt">Pipelines and ports provide a critical bypass, but not necessarily a sufficient long-term solution should the Iran threat persist.</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文摘要</span> 若伊朗相关威胁持续，管道和港口可为石油运输提供绕开霍尔木兹海峡的关键通道，但未必是充分的长期解决方案。</p>
+  <details class="article-details">
+    <summary>中文摘要</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">若伊朗相关威胁持续，管道和港口可为石油运输提供绕开霍尔木兹海峡的关键通道，但未必是充分的长期解决方案。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://www.bloomberg.com/news/newsletters/2026-06-03/oil-s-hormuz-alternatives-offer-only-a-partial-fix" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://www.bloomberg.com/news/videos/2026-06-03/most-speculative-portions-of-market-rallying-dawson-video" target="_blank" rel="noopener noreferrer">‘Incredible Rally’ in Most Speculative Portions of Market, Says Cameron Dawson</a></h3>
-    <a class="article-cta" href="https://www.bloomberg.com/news/videos/2026-06-03/most-speculative-portions-of-market-rallying-dawson-video" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip">Bloomberg Markets</span><span class="meta-chip muted">06/03 05:11</span></span>
   </div>
   <p class="article-excerpt">Cameron Dawson, CIO at NewEdge Wealth, discusses the level of froth in the equities rally, but says the earnings picture is “so very strong” that you can’t sit things out. (Source: Bloomberg)</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文摘要</span> 新边财富首席投资官卡梅伦·道森称，股市中最具投机性的板块出现显著上涨，但企业盈利图景仍十分强劲，投资者难以离场。</p>
+  <details class="article-details">
+    <summary>中文摘要</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">新边财富首席投资官卡梅伦·道森称，股市中最具投机性的板块出现显著上涨，但企业盈利图景仍十分强劲，投资者难以离场。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://www.bloomberg.com/news/videos/2026-06-03/most-speculative-portions-of-market-rallying-dawson-video" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://www.bloomberg.com/news/videos/2026-06-03/jensen-huang-sparks-jensanity-at-computex-in-taiwan-video" target="_blank" rel="noopener noreferrer">Jensen Huang Sparks “Jensanity” at Computex in Taiwan</a></h3>
-    <a class="article-cta" href="https://www.bloomberg.com/news/videos/2026-06-03/jensen-huang-sparks-jensanity-at-computex-in-taiwan-video" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip">Bloomberg Markets</span><span class="meta-chip muted">06/03 05:05</span></span>
   </div>
   <p class="article-excerpt">The biggest names in tech, led by Nvidia&#39;s Jensen Huang, descended on Computex in Taiwan to unveil the next generation of AI infrastructure and global hardware innovations. Stephen Engle gives an inside look. (Source: Bloomberg)</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文摘要</span> 英伟达首席执行官黄仁勋等科技业人士在台湾台北国际电脑展亮相，发布新一代人工智能基础设施和全球硬件创新。</p>
+  <details class="article-details">
+    <summary>中文摘要</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">英伟达首席执行官黄仁勋等科技业人士在台湾台北国际电脑展亮相，发布新一代人工智能基础设施和全球硬件创新。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://www.bloomberg.com/news/videos/2026-06-03/jensen-huang-sparks-jensanity-at-computex-in-taiwan-video" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://www.bbc.com/news/articles/c9d37gdxp7xo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Lloyds, Halifax and Bank of Scotland app users hit by outage</a></h3>
-    <a class="article-cta" href="https://www.bbc.com/news/articles/c9d37gdxp7xo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip">BBC Business</span><span class="meta-chip muted">06/03 05:02</span></span>
   </div>
   <p class="article-excerpt">&quot;We&#39;re aware some customers are having issues with our app and online banking. We&#39;re really sorry about this,&quot; Lloyds Bank posted on X.</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文摘要</span> 劳埃德银行、哈利法克斯和苏格兰银行的应用及网上银行出现故障。劳埃德银行在社交平台称，部分客户受影响并致歉。</p>
+  <details class="article-details">
+    <summary>中文摘要</summary>
+    <div class="article-summary-wrap">
+      <p class="article-summary">劳埃德银行、哈利法克斯和苏格兰银行的应用及网上银行出现故障。劳埃德银行在社交平台称，部分客户受影响并致歉。</p>
+    </div>
+  </details>
+  <div class="article-actions">
+    <a class="article-cta" href="https://www.bbc.com/news/articles/c9d37gdxp7xo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
   </div>
@@ -2564,141 +2999,141 @@
     <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://www.v2ex.com/t/1217696" target="_blank" rel="noopener noreferrer">求助帖：搭车干净🪜机场</a></h3>
-    <a class="article-cta" href="https://www.v2ex.com/t/1217696" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip muted">06/03 05:19</span></span>
   </div>
   <p class="article-excerpt">8 回复 · 程序员 节点</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 8 回复 · 程序员 节点</p>
+  
+  <div class="article-actions">
+    <a class="article-cta" href="https://www.v2ex.com/t/1217696" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://www.v2ex.com/t/1217682" target="_blank" rel="noopener noreferrer">Github 仓库被轰炸</a></h3>
-    <a class="article-cta" href="https://www.v2ex.com/t/1217682" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip muted">06/03 04:09</span></span>
   </div>
   <p class="article-excerpt">7 回复 · 程序员 节点</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 7 回复 · 程序员 节点</p>
+  
+  <div class="article-actions">
+    <a class="article-cta" href="https://www.v2ex.com/t/1217682" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://www.v2ex.com/t/1217670" target="_blank" rel="noopener noreferrer">要领大礼包了，看看工作发现有家公司给 V2EX 写到了 jd 里</a></h3>
-    <a class="article-cta" href="https://www.v2ex.com/t/1217670" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip muted">06/03 03:01</span></span>
   </div>
   <p class="article-excerpt">7 回复 · 程序员 节点</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 7 回复 · 程序员 节点</p>
+  
+  <div class="article-actions">
+    <a class="article-cta" href="https://www.v2ex.com/t/1217670" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://www.v2ex.com/t/1217649" target="_blank" rel="noopener noreferrer">RackNerd 什么情况??</a></h3>
-    <a class="article-cta" href="https://www.v2ex.com/t/1217649" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip muted">06/03 01:58</span></span>
   </div>
   <p class="article-excerpt">7 回复 · 程序员 节点</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 7 回复 · 程序员 节点</p>
+  
+  <div class="article-actions">
+    <a class="article-cta" href="https://www.v2ex.com/t/1217649" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://www.v2ex.com/t/1217635" target="_blank" rel="noopener noreferrer">请教下 mac 上指定窗口高度和大小的软件</a></h3>
-    <a class="article-cta" href="https://www.v2ex.com/t/1217635" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip muted">06/03 01:10</span></span>
   </div>
   <p class="article-excerpt">10 回复 · Apple 节点</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 10 回复 · Apple 节点</p>
+  
+  <div class="article-actions">
+    <a class="article-cta" href="https://www.v2ex.com/t/1217635" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://www.v2ex.com/t/1217619" target="_blank" rel="noopener noreferrer">Copilot 更改计价模式后的编码模型选择</a></h3>
-    <a class="article-cta" href="https://www.v2ex.com/t/1217619" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip muted">06/03 00:35</span></span>
   </div>
   <p class="article-excerpt">13 回复 · 程序员 节点</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 13 回复 · 程序员 节点</p>
+  
+  <div class="article-actions">
+    <a class="article-cta" href="https://www.v2ex.com/t/1217619" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://www.v2ex.com/t/1217617" target="_blank" rel="noopener noreferrer">卧槽，用了 10 多年的 github 账号突然被封了，各位老哥怎么办？</a></h3>
-    <a class="article-cta" href="https://www.v2ex.com/t/1217617" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip muted">06/03 00:28</span></span>
   </div>
   <p class="article-excerpt">19 回复 · 程序员 节点</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 19 回复 · 程序员 节点</p>
+  
+  <div class="article-actions">
+    <a class="article-cta" href="https://www.v2ex.com/t/1217617" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://www.v2ex.com/t/1217515" target="_blank" rel="noopener noreferrer">vibe coding 了一个高仿的 mac 端的 paste ，完全免费。</a></h3>
-    <a class="article-cta" href="https://www.v2ex.com/t/1217515" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip muted">06/02 19:35</span></span>
   </div>
   <p class="article-excerpt">7 回复 · Apple 节点</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 7 回复 · Apple 节点</p>
+  
+  <div class="article-actions">
+    <a class="article-cta" href="https://www.v2ex.com/t/1217515" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://www.v2ex.com/t/1217484" target="_blank" rel="noopener noreferrer">还有几天就是苹果 WWDC26 全球开发者大会了，怎么没看到相关新闻，还有下一代 iOS27 更新了什么内容，好像也没见媒体报道了？还是说因为我关注的少了不给我推了？</a></h3>
-    <a class="article-cta" href="https://www.v2ex.com/t/1217484" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip muted">06/02 18:20</span></span>
   </div>
   <p class="article-excerpt">23 回复 · Apple 节点</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 23 回复 · Apple 节点</p>
+  
+  <div class="article-actions">
+    <a class="article-cta" href="https://www.v2ex.com/t/1217484" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://www.v2ex.com/t/1217378" target="_blank" rel="noopener noreferrer">玄学？为啥土区支付方式不能改为 None？</a></h3>
-    <a class="article-cta" href="https://www.v2ex.com/t/1217378" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip muted">06/02 02:49</span></span>
   </div>
   <p class="article-excerpt">17 回复 · Apple 节点</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 17 回复 · Apple 节点</p>
+  
+  <div class="article-actions">
+    <a class="article-cta" href="https://www.v2ex.com/t/1217378" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
   </div>
@@ -2706,141 +3141,141 @@
     <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://linux.do/t/topic/2298330" target="_blank" rel="noopener noreferrer">情侣旅行记忆地图（地图 + 时间线 + 回忆）</a></h3>
-    <a class="article-cta" href="https://linux.do/t/topic/2298330" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip muted">06/03 02:15</span></span>
   </div>
   <p class="article-excerpt">Map of Intl 是一个属于两个人的旅行记录应用。 最开始只是想解决一个很简单的问题： 旅行结束后，照片越来越多，但回忆却越来越难整理。 于是我尝试用 AI 和 Vibe Coding 的方式，做了一个能够记录共同生活的小程序。 它将地图、时间线、旅行计划与回忆整理融合在一起，把一起去过的城市、走过的路线、拍下的照片和重要纪念日串联成完整的故事。 随着记录越来越多，地图上的足迹会不断增长，时间线也会越来越长。 后来发现，它记录的不只是旅行。 而是两个人一起走过的生活。 希望多年以后再次打开时，依然能够看见那些共同经历过的风景和时光。 可自由编辑路线 可查看旅行日记 接入高德地图API 3</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> Map of Intl 是一个属于两个人的旅行记录应用。 最开始只是想解决一个很简单的问题： 旅行结束后，照片越来越多，但回忆却越来越难整理。 于是我尝试用 AI 和 Vibe Coding 的方式，做了一个能够记录共同生活的小程序。 它将地图、时间线、旅行计划与回忆整理融合在一起，把一起去过的城市、走过的路线、拍下的照片和重要纪念日串联成完整的故事。 随着记录越来越多，地图上的足迹会不断增长，时间线也会越来越长。 后来发现，它记录的不只是旅行。 而是两个人一起走过的生活。 希望多年以后再次打开时，依然能够看见那些共同经历过的风景和时光。 可自由编辑路线 可查看旅行日记 接入高德地图API 3</p>
+  
+  <div class="article-actions">
+    <a class="article-cta" href="https://linux.do/t/topic/2298330" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://linux.do/t/topic/2298298" target="_blank" rel="noopener noreferrer">claude这是你不仁</a></h3>
-    <a class="article-cta" href="https://linux.do/t/topic/2298298" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip muted">06/03 02:08</span></span>
   </div>
   <p class="article-excerpt">这是你不仁别怪我不义。我是你忠实粉丝，就这样回报我。你彻底成功的让我对你失望透顶 我这么纯都不行 既然你很喜欢发验证码是吧，那我就写个脚本让你全国发，不要停 28 个帖子 - 25 位参与者 阅读完整话题</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 这是你不仁别怪我不义。我是你忠实粉丝，就这样回报我。你彻底成功的让我对你失望透顶 我这么纯都不行 既然你很喜欢发验证码是吧，那我就写个脚本让你全国发，不要停 28 个帖子 - 25 位参与者 阅读完整话题</p>
+  
+  <div class="article-actions">
+    <a class="article-cta" href="https://linux.do/t/topic/2298298" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://linux.do/t/topic/2298285" target="_blank" rel="noopener noreferrer">codex 自动化分析 A 股收盘日报</a></h3>
-    <a class="article-cta" href="https://linux.do/t/topic/2298285" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip muted">06/03 02:05</span></span>
   </div>
   <p class="article-excerpt">如果有特别想关注的，可以在提示词中说的更清楚一些，codex拿到的数据还是蛮完善的，我现在就是每天看一下，太忙，最近都空仓着，没咋关注这些。 提示词（可根据需求自行修改，我样式上做了一些细微的调整，不好总结出来了[token 我没算过，我开的pro20x 会员，这个具体会跑多少token，我没细看过，记得注意哈，万一撑不住就不好了]）： 你的任务是：在每个 A 股交易日收盘后，自动生成一份完整的《A股收盘日报 HTML 页面》。 生成时间建议：北京时间每个交易日 15:30 - 18:30。 重要要求： 最终结果必须是一个完整可打开的 HTML 文件。 HTML 页面必须包含完整 CSS 样式</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 如果有特别想关注的，可以在提示词中说的更清楚一些，codex拿到的数据还是蛮完善的，我现在就是每天看一下，太忙，最近都空仓着，没咋关注这些。 提示词（可根据需求自行修改，我样式上做了一些细微的调整，不好总结出来了[token 我没算过，我开的pro20x 会员，这个具体会跑多少token，我没细看过，记得注意哈，万一撑不住就不好了]）： 你的任务是：在每个 A 股交易日收盘后，自动生成一份完整的《A股收盘日报 HTML 页面》。 生成时间建议：北京时间每个交易日 15:30 - 18:30。 重要要求： 最终结果必须是一个完整可打开的 HTML 文件。 HTML 页面必须包含完整 CSS 样式</p>
+  
+  <div class="article-actions">
+    <a class="article-cta" href="https://linux.do/t/topic/2298285" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://linux.do/t/topic/2298218" target="_blank" rel="noopener noreferrer">君の公益 回来吧，天才程序员们~</a></h3>
-    <a class="article-cta" href="https://linux.do/t/topic/2298218" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip muted">06/03 01:56</span></span>
   </div>
   <p class="article-excerpt">gpt 恢复供应 大家尽量不要给我发私信，有问题评论就行，无力回复，太多了 不要以任何理由索要额度/寻求解封 用不了就是号池在维护 不要去星辰的售后群去问我的客服为啥君の公益用不了，没有别的意思，就是客服可能会比较崩溃 我不会建任何有关君の公益的qq群/tg群，我也不喜欢看到有人以我的名义建群 君の公益唯一的解释权在我这里，我不喜欢看到有人代替我解释什么，希望大家尽量避免 签到额度调整为每天52刀 已经安排佬友帮我查分发了，已经封了一批，后面不定期也会安排检查 289 个帖子 - 257 位参与者 阅读完整话题</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> gpt 恢复供应 大家尽量不要给我发私信，有问题评论就行，无力回复，太多了 不要以任何理由索要额度/寻求解封 用不了就是号池在维护 不要去星辰的售后群去问我的客服为啥君の公益用不了，没有别的意思，就是客服可能会比较崩溃 我不会建任何有关君の公益的qq群/tg群，我也不喜欢看到有人以我的名义建群 君の公益唯一的解释权在我这里，我不喜欢看到有人代替我解释什么，希望大家尽量避免 签到额度调整为每天52刀 已经安排佬友帮我查分发了，已经封了一批，后面不定期也会安排检查 289 个帖子 - 257 位参与者 阅读完整话题</p>
+  
+  <div class="article-actions">
+    <a class="article-cta" href="https://linux.do/t/topic/2298218" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://linux.do/t/topic/2298150" target="_blank" rel="noopener noreferrer">RawChat的codex公益站，注册就送100刀额度</a></h3>
-    <a class="article-cta" href="https://linux.do/t/topic/2298150" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip muted">06/03 01:45</span></span>
   </div>
   <p class="article-excerpt">RawChat公益，codex每人每天赠送100刀额度 https://new.sharedchat.cc ccstwich配置方式： 公益站有非常完善的风控机制，请勿重复注册，否则可能会被连坐封号 qq群：1075430606（有问题群内反馈回复会快点） 56 个帖子 - 48 位参与者 阅读完整话题</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> RawChat公益，codex每人每天赠送100刀额度 https://new.sharedchat.cc ccstwich配置方式： 公益站有非常完善的风控机制，请勿重复注册，否则可能会被连坐封号 qq群：1075430606（有问题群内反馈回复会快点） 56 个帖子 - 48 位参与者 阅读完整话题</p>
+  
+  <div class="article-actions">
+    <a class="article-cta" href="https://linux.do/t/topic/2298150" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://linux.do/t/topic/2297508" target="_blank" rel="noopener noreferrer">我成为领导眼中成了啥都会的人，我是该笑还是该哭呢？</a></h3>
-    <a class="article-cta" href="https://linux.do/t/topic/2297508" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip muted">06/03 00:11</span></span>
   </div>
   <p class="article-excerpt">今天我的一个同事突然来找我，给我看了一个PPT说老板让你把这个ppt做成视频，我就是菜鸡，哪里会做视频啊？求教万能的论坛大佬们，我需要怎么做啊？ 105 个帖子 - 73 位参与者 阅读完整话题</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 今天我的一个同事突然来找我，给我看了一个PPT说老板让你把这个ppt做成视频，我就是菜鸡，哪里会做视频啊？求教万能的论坛大佬们，我需要怎么做啊？ 105 个帖子 - 73 位参与者 阅读完整话题</p>
+  
+  <div class="article-actions">
+    <a class="article-cta" href="https://linux.do/t/topic/2297508" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://linux.do/t/topic/2297443" target="_blank" rel="noopener noreferrer">visa卡了办了，Giffgaff卡了买了，居然卡在这个地方了</a></h3>
-    <a class="article-cta" href="https://linux.do/t/topic/2297443" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip muted">06/03 00:00</span></span>
   </div>
   <p class="article-excerpt">打算买土区的gpt plus会员，所有都准备好了，手机版本太低，下载不了chatgpt，这不天塌了嘛！我得是苹果13，版本16.0.3，这个版本挺省电的，更新不炸了吗？难道还要换手机？ 114 个帖子 - 67 位参与者 阅读完整话题</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 打算买土区的gpt plus会员，所有都准备好了，手机版本太低，下载不了chatgpt，这不天塌了嘛！我得是苹果13，版本16.0.3，这个版本挺省电的，更新不炸了吗？难道还要换手机？ 114 个帖子 - 67 位参与者 阅读完整话题</p>
+  
+  <div class="article-actions">
+    <a class="article-cta" href="https://linux.do/t/topic/2297443" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://linux.do/t/topic/2297374" target="_blank" rel="noopener noreferrer">记录首次AI漫剧的创作</a></h3>
-    <a class="article-cta" href="https://linux.do/t/topic/2297374" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip muted">06/02 23:51</span></span>
   </div>
   <p class="article-excerpt">刚刚完成了一个1分多种的AI动漫短剧，更见坚定了我更愿意成为一个打磨脚本的创作者的想法！！ 第二步：生成人物的三视图，是为了放崩溃 第三步：撰写AI故事脚本 第四步：生成比较火的九宫格图片（我生成的是带首尾帧，但实际上并不需要，反而到seedance2.0会被限制发挥，我建议直出） 第五步：因为seedance2.0最多只能生成15s视频，直接参考九宫格图，不好约束，所以这让我有了新的思考，也许九宫格图更适合15s直出的案例，我经验有限，请佬指正 第六步：最初我选择seedance2.0选择首尾帧模式，因为之前生成的都是带首尾帧的图片，是为了更好的约束AI,我@引用图片的左侧是首帧、右侧是尾帧</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 刚刚完成了一个1分多种的AI动漫短剧，更见坚定了我更愿意成为一个打磨脚本的创作者的想法！！ 第二步：生成人物的三视图，是为了放崩溃 第三步：撰写AI故事脚本 第四步：生成比较火的九宫格图片（我生成的是带首尾帧，但实际上并不需要，反而到seedance2.0会被限制发挥，我建议直出） 第五步：因为seedance2.0最多只能生成15s视频，直接参考九宫格图，不好约束，所以这让我有了新的思考，也许九宫格图更适合15s直出的案例，我经验有限，请佬指正 第六步：最初我选择seedance2.0选择首尾帧模式，因为之前生成的都是带首尾帧的图片，是为了更好的约束AI,我@引用图片的左侧是首帧、右侧是尾帧</p>
+  
+  <div class="article-actions">
+    <a class="article-cta" href="https://linux.do/t/topic/2297374" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://linux.do/t/topic/2297355" target="_blank" rel="noopener noreferrer">技术转销售做了三周，辞职了，给大家说点自己的体验</a></h3>
-    <a class="article-cta" href="https://linux.do/t/topic/2297355" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip muted">06/02 23:47</span></span>
   </div>
   <p class="article-excerpt">今天上午提的离职，现在已经在家里重新开始了，先介绍一下我自己的一个情况。 我23年双非本科毕业，在广州做了3年的游戏，最后因为项目没起来，加上一些自己在公司陷入了一点办公室政治，所以辞职了。以为自己可以动力满满开发一个自己的游戏，但是发现自己搞的话没人可以当面交流灵感，也没人监工提醒自己，然后就从2月浑浑噩噩到了5月左右。 因为自己是byd粉丝，一直很想买byd的宋pro，从大学看到现在了，然后就想既然做不动游戏，不如买个车去环一下国内旅游，然后找个班上吧。 然后买了车之后，发现自己的存款还不足以旅游，只能坚持3-4月的开销，虽然也有一点家里支持，但是我这个人就是不想让家里出钱的，因为家里给的</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 今天上午提的离职，现在已经在家里重新开始了，先介绍一下我自己的一个情况。 我23年双非本科毕业，在广州做了3年的游戏，最后因为项目没起来，加上一些自己在公司陷入了一点办公室政治，所以辞职了。以为自己可以动力满满开发一个自己的游戏，但是发现自己搞的话没人可以当面交流灵感，也没人监工提醒自己，然后就从2月浑浑噩噩到了5月左右。 因为自己是byd粉丝，一直很想买byd的宋pro，从大学看到现在了，然后就想既然做不动游戏，不如买个车去环一下国内旅游，然后找个班上吧。 然后买了车之后，发现自己的存款还不足以旅游，只能坚持3-4月的开销，虽然也有一点家里支持，但是我这个人就是不想让家里出钱的，因为家里给的</p>
+  
+  <div class="article-actions">
+    <a class="article-cta" href="https://linux.do/t/topic/2297355" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
 <article class="article">
   <div class="article-head">
     <h3 class="article-title"><a href="https://linux.do/t/topic/2297313" target="_blank" rel="noopener noreferrer">恭请佬友们前来观礼</a></h3>
-    <a class="article-cta" href="https://linux.do/t/topic/2297313" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
   <div class="article-meta">
     
     <span class="meta-inline"><span class="meta-chip muted">06/02 23:40</span></span>
   </div>
   <p class="article-excerpt">早岁入站知规艰，仍许潜龙灌水间。 43 个帖子 - 35 位参与者 阅读完整话题</p>
-  <div class="article-summary-wrap">
-    <p class="article-summary"><span class="summary-label">中文介绍</span> 早岁入站知规艰，仍许潜龙灌水间。 43 个帖子 - 35 位参与者 阅读完整话题</p>
+  
+  <div class="article-actions">
+    <a class="article-cta" href="https://linux.do/t/topic/2297313" target="_blank" rel="noopener noreferrer">查看原文 ↗</a>
   </div>
 </article>
   </div>
