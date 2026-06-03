@@ -1,4 +1,3 @@
-import OpenAI from "openai";
 import { classifyError, logLlmCall } from "../log";
 import type { LlmRunOptions, LlmRunResult } from "../llm";
 
@@ -42,9 +41,7 @@ export const PRESETS: Record<OpenAICompatConfig["backend"], OpenAICompatConfig> 
   },
 };
 
-const clientCache = new Map<string, OpenAI>();
-
-function getClient(cfg: OpenAICompatConfig): { client: OpenAI; model: string } {
+function getClient(cfg: OpenAICompatConfig): { apiKey: string; baseURL: string; model: string } {
   // Provider-specific env wins; LLM_API_KEY / LLM_BASE_URL are generic
   // aliases so users pointing at a non-preset OpenAI-compatible service
   // (Moonshot, SiliconFlow, OpenRouter, self-hosted vLLM, ...) don't have
@@ -60,13 +57,7 @@ function getClient(cfg: OpenAICompatConfig): { client: OpenAI; model: string } {
     || cfg.defaultBaseUrl;
   const model = process.env.LLM_MODEL?.trim() || cfg.defaultModel;
 
-  const cacheKey = `${baseURL}::${apiKey.slice(-6)}`;
-  let client = clientCache.get(cacheKey);
-  if (!client) {
-    client = new OpenAI({ apiKey, baseURL });
-    clientCache.set(cacheKey, client);
-  }
-  return { client, model };
+  return { apiKey, baseURL, model };
 }
 
 export function openaiCompatModel(cfg: OpenAICompatConfig): string {
@@ -77,14 +68,23 @@ export async function runOpenAICompat(
   opts: LlmRunOptions,
   cfg: OpenAICompatConfig,
 ): Promise<LlmRunResult> {
-  const { client, model } = getClient(cfg);
+  const { apiKey, baseURL, model } = getClient(cfg);
   const started = Date.now();
   const inputChars = opts.systemPrompt.length + opts.userPrompt.length;
   const timeoutMs = opts.timeoutMs ?? 180_000;
 
   try {
-    const resp = await client.chat.completions.create(
-      {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), timeoutMs);
+    const response = await fetch(`${baseURL.replace(/\/+$/, "")}/chat/completions`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "User-Agent": "daily-brief/0.1",
+      },
+      body: JSON.stringify({
         model,
         messages: [
           { role: "system", content: opts.systemPrompt },
@@ -100,10 +100,18 @@ export async function runOpenAICompat(
         // Don't force JSON mode — not all OpenAI-compat providers support
         // response_format=json_object, and our prompts + jsonrepair already
         // handle the slop.
-      },
-      { timeout: timeoutMs },
-    );
-    const text = (resp.choices[0]?.message?.content ?? "").trim();
+      }),
+      signal: controller.signal,
+    }).finally(() => clearTimeout(timeout));
+    const payload: any = await response.json().catch(async () => ({ error: await response.text() }));
+    if (!response.ok) {
+      const detail = typeof payload?.error === "string"
+        ? payload.error
+        : payload?.error?.message || response.statusText;
+      throw new Error(`${response.status} ${detail}`);
+    }
+    const content = payload?.choices?.[0]?.message?.content;
+    const text = (typeof content === "string" ? content : JSON.stringify(content ?? "")).trim();
     const durationMs = Date.now() - started;
     logLlmCall({
       ts: new Date(started).toISOString(),
